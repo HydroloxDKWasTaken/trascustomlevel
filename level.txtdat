@@ -1,0 +1,71 @@
+[unitdata]
+ptr=unitnamestr ; const char* m_name
+ptr=0 ; cdc::CMeshResource* m_colMesh
+uint32=0 ; dtp::UnitData::UnitFlags m_unitFlags
+uint32=0 ; unsigned int m_numFSFX
+ptr=0 ; dtp::UnitData::FSFXLink* m_pFSFX
+pad=80 ; dtp::UnitData::depthq DepthData
+ptr=0 ; dtp::ActionGraph* ActiongraphData
+uint32=0 ; unsigned int m_scriptTypeID
+uint32=0 ; unsigned int m_numStreamingSignals
+ptr=0 ; dtp::UnitData::StreamingSignal* m_pStreamingSignals
+uint32=0 ; unsigned int m_numCinematics
+ptr=0 ; dtp::UnitData::FSFXLink* FSFXList
+ptr=0 ; dtp::UnitData::StreamingSignal* m_streamingSignals
+ptr=0 ; const char** m_CinematicList
+pad=12
+pad=3312 ; dtp::UnitData::DTPNextGenData m_NextGenData
+ptr=0 ; unsigned short* BirthObjects
+uint16=0 ; unsigned short WeatherObject
+pad=2
+ptr=0 ; dtp::DisabledLightGroups* m_disabledLightGroups
+; dtp::UnitData::Misc Misc
+; {
+float32=0 ; float reflectionPlaneZOffset
+float32=-9999 ; float enemyKillAltitude
+; }
+uint32=0 ; unsigned int m_numNavigationGroup
+ptr=0 ; const char** m_listNavigationGroup
+; dtp::WindData unitWind
+; {
+uint8=1 ; bool ignoreUnitWind
+uint8=1 ; bool ignoreCellWind
+pad=2
+uint32=0 ; unsigned int WaveCount
+ptr=0 ; dtp::WindData::WaveAttrib* WaveArray
+; }
+ptr=0 ; dtp::UnitData::StreamLayer* m_streamLayers
+uint32=0 ; unsigned int m_streamLayerSetCount
+uint32=0 ; unsigned int m_streamLayersCount
+ptr=0 ; dtp::UnitData::StreamLayerSetListT* m_streamLayerSets
+ptr=0 ; dtp::UnitData::LocalStateInfo* m_localStates
+uint32=0 ; unsigned int m_localStateCount
+ptr=0 ; dtp::ActionGraph* m_worldState
+ptr=0 ; dtp::UnitData::TriggerGroup* m_triggerGroups
+uint32=0 ; unsigned int m_triggerGroupsCount
+ptr=0 ; dtp::UnitData::UnitLightGroup* m_UnitLightGroups
+uint32=0 ; unsigned int m_UnitLightGroupsCount
+; dtp::UnitData::HeightMapTerrainData m_HeightMapData
+; {
+uint8=0 ; bool m_EnableHeightMap
+pad=3
+ptr=0 ; cdc::IMaterial* m_TerrainMaterial
+ptr=0 ; cdc::TextureMap* m_HeightMap
+float32=0 ; float m_HeightScale
+float32=0 ; float m_HeightBias
+uint32=0 ; unsigned int m_TerrainMarker
+; }
+ptr=0 ; dtp::UnitData::DTPOverlayData* m_OverlayData
+ptr=0 ; dtp::UnitData::GameUnitData* GameUnitData
+; dtp::UnitData::LayeredNextGenDataList m_LayeredGraphicsDataList
+; {
+ptr=0 ; dtp::UnitData::LayeredNextGenData* m_streamGraphicsData
+uint32=0 ; unsigned int m_numStreamGraphicsData
+; }
+uint32=0 unsigned int m_iNumCinEvents
+pad=12
+
+[unitnamestr]
+str=mytestlevel
+
+str=End of level.txtdat"

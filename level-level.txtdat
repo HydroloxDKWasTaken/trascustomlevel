@@ -1,0 +1,65 @@
+[level]
+ptr=terrain // Terrain* terrain
+float32=0.0 // float waterZLevel
+ptr=0 // char* worldName
+ptr=0 // short* SignalIDList
+uint32=0x4c204be // unsigned int versionNumber
+uint32=0xcafecafe // unsigned int guiID
+int32=194 // int streamUnitID
+ptr=0 // short** WeatherHeightmapData
+ptr=0 // void* pCdcPlannerData
+ptr=0 // void* pVolumetricPlannerData
+ptr=0 // void* pSoundSpatialData
+ptr=0 // dtp::UnitData* pUnitData
+ptr=0 // dtp::ADMD* pADMDData
+// cdc::Vector3 sceneCenterOffset
+// {
+float32=0.0
+float32=0.0
+float32=0.0
+float32=0.0
+// }
+ptr=0 // void* pSceneData
+
+[terrain]
+int16=0 // short UnitChangeFlags
+int16=0 // short numStreamUnitPortals
+ptr=0 // StreamUnitPortal* streamUnitPortals
+int32=1 // int numTerrainGroups
+ptr=terraingroups // TerrainGroup** terrainGroups
+ptr=0 // TerrainGroup* signalTerrainGroup
+int32=0 // int numMeshInstances
+ptr=0 // cdc::MeshInstance* meshInstances
+int32=0 // int numMeshes
+ptr=0 // cdc::Mesh* meshes
+
+[terraingroups]
+ptr=tg_1
+
+[tg_1]
+// cdc::Vector3 globalOffset
+// {
+float32=0.0
+float32=0.0
+float32=0.0
+float32=0.0
+// }
+// cdc::Vector3 localOffset
+// {
+float32=0.0
+float32=0.0
+float32=0.0
+float32=0.0
+// }
+int32=0 // int m_obsolete
+int32=0 // int ID
+int32=10050 // int uniqueID
+int32=0 // int splineID
+ptr=0 // dtp::TerrainGroup* admdTerrainGroup
+float32=0.0 // float groupOriginX
+float32=0.0 // float groupOriginY
+float32=0.0 // float groupOriginZ
+ptr=level // cdc::Level* level
+int32=0 // int numMeshInstance
+
+str=End of level-level.txtdat"
