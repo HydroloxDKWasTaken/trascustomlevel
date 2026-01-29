@@ -12,6 +12,7 @@ ptr=0 // void* pVolumetricPlannerData
 ptr=0 // void* pSoundSpatialData
 externptr=7:200001 // dtp::UnitData* pUnitData
 externptr=7:200002 // dtp::ADMD* pADMDData
+pad=12
 // cdc::Vector3 sceneCenterOffset
 // {
 float32=0.0
@@ -19,7 +20,7 @@ float32=0.0
 float32=0.0
 float32=0.0
 // }
-ptr=0 // void* pSceneData
+externptr=7:200003 // void* pSceneData
 
 [terrain]
 int16=0 // short UnitChangeFlags

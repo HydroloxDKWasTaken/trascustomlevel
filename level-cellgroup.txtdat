@@ -1,0 +1,18 @@
+[cellgroup]
+ptr=header ; cdc::CellGroupDataHeader* pHeader
+externptr=7:200002 ; dtp::ADMD* pADMD
+ptr=0 ; cdc::CellBSPNodeData* pBSPNodes
+ptr=0 ; cdc::CellStreamGroupData* pStreamGroups
+ptr=0 ; const char** ppSymbols
+ptr=0 ; cdc::CellData** ppCells
+ptr=0 ; cdc::CellStreamData* pVoidTerrain
+ptr=0 ; cdc::CellStreamData* pExteriorTerrain
+
+[header]
+uint32=0 ; unsigned int numTotalCells
+uint32=0 ; unsigned int numToplevelCells
+uint32=0 ; unsigned int numBSPNodes
+uint32=0 ; unsigned int numStreamGroups
+uint32=0 ; unsigned int numSymbols
+uint32=0 ; unsigned int numPortalSymbols
+uint32=0 ; unsigned int symbolTableSize
