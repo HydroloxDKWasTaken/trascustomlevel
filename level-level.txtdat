@@ -11,7 +11,7 @@ ptr=0 // void* pCdcPlannerData
 ptr=0 // void* pVolumetricPlannerData
 ptr=0 // void* pSoundSpatialData
 externptr=7:200001 // dtp::UnitData* pUnitData
-ptr=0 // dtp::ADMD* pADMDData
+externptr=7:200002 // dtp::ADMD* pADMDData
 // cdc::Vector3 sceneCenterOffset
 // {
 float32=0.0
