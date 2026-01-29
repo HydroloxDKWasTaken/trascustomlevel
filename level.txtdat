@@ -18,7 +18,7 @@ pad=3312 ; dtp::UnitData::DTPNextGenData m_NextGenData
 ptr=0 ; unsigned short* BirthObjects
 uint16=0 ; unsigned short WeatherObject
 pad=2
-ptr=0 ; dtp::DisabledLightGroups* m_disabledLightGroups
+ptr=disabledlightgroups ; dtp::DisabledLightGroups* m_disabledLightGroups
 ; dtp::UnitData::Misc Misc
 ; {
 float32=0 ; float reflectionPlaneZOffset
@@ -66,6 +66,9 @@ uint32=0 ; unsigned int m_numStreamGraphicsData
 uint32=0 ; unsigned int m_iNumCinEvents
 pad=12
 
+[disabledlightgroups]
+uint32=0 ; unsigned int disabledLightListSize
+
 [unitnamestr]
 str=mytestlevel
 
@@ -89,7 +92,7 @@ ptr=0 ; void* m_pLevel
 ptr=0 ; void* m_pWorldDataDefault
 ptr=0 ; void* m_pWorldData
 uint32=0 ; unsigned int m_defaultRegion
-uint16=0 ; unsigned short m_pStartCheckpoint
+uint16=-1 ; unsigned short m_pStartCheckpoint
 uint8=0 ; bool m_darkArea
 uint8=0 ; bool m_startUnit
 uint16=-1 ; unsigned short m_visionModeTerrainGroup
