@@ -27,7 +27,7 @@ def get_reloc_size(fname):
         id16 = read_u32(f)
         id_ = read_u32(f)
         ptr = read_u32(f)
-        return 0x14 + intern * 8 + extern * 4  + id16 * 8 + id_ * 4 + ptr * 4
+        return 0x14 + intern * 8 + extern * 8  + id16 * 8 + id_ * 4 + ptr * 4
     print("Failed to open file '{}'".format(fname))
 
 def next_valid_offset(offset, align):
