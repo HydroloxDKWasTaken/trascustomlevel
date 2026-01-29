@@ -20,6 +20,11 @@ def read_u8(f): return struct.unpack('B', f.read(1))[0]
 def write_u32(f, u): f.write(struct.pack('<I', u))
 def read_u32(f): return struct.unpack('<I', f.read(4))[0]
 
+def build_error(msg):
+    print("BUILD ERROR!:")
+    print(msg)
+    sys.exit(1)
+
 def get_reloc_size(fname):
     with open(fname, "rb") as f:
         intern = read_u32(f)
@@ -97,7 +102,9 @@ with open(drmname, "r") as f:
             primary_section = i
 
 k_dlc_index = 69 << 4
-cur_offset = 0xae3000 + 0x800
+tigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.tiger"
+origtigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.orig.tiger"
+cur_offset = next_valid_offset(os.path.getsize(origtigername) + 0x800, 0x800)
 cur_decompressed_offset = 0x0
 prev_total_uncompressed_size = 0
 with open(drmoutname, "wb") as f:
@@ -143,52 +150,64 @@ with open(drmoutname, "wb") as f:
 
 
 print(" Built drm '{}'".format(drmoutname))
-tigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.tiger"
-origtigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.orig.tiger"
 print(" Writing to '{}'...".format(tigername))
 
 def stream_copy(src, dest, start, end):
     if src.tell() != start:
-        print("BADBADBAD")
+        build_error("src.tell() [{}] != start [{}]".format(src.tell(), start))
     if dest.tell() != start:
-        print("BADBADBAD")
+        build_error("dest.tell() [{}] != start [{}]".format(dest.tell(), start))
     if start >= end:
-        print("BADBADBAD")
+        build_error("start [{}] >= end [{}]".format(start, end))
     dest.write(src.read(end - start))
+
+def pad_to(f, target):
+    if f.tell() >= target:
+        build_error("f.tell() [{:08x}] >= target [{:08x}]".format(f.tell(), target))
+    while f.tell() != target:
+        write_u8(f, 0x0)
+
+def read_records(f, count):
+    records = []
+    for i in range(count):
+        hash = read_u32(f)
+        specMask = read_u32(f)
+        size = read_u32(f)
+        packedOffset = read_u32(f)
+        records.append((hash, specMask, size, packedOffset))
+    return records
+
+def insert_record(records, record):
+    records.append(record)
+    records.sort(key=lambda x: x[0])
 
 with open(tigername, "wb") as f:
     with open(origtigername, "rb") as o:
-        # f.seek(0xc)
-        for i in range(0xc):
-            f.write(o.read(1))
-        write_u32(f, 0x12)
-        #f.seek(0x144)
+        stream_copy(o, f, 0x0, 0x0c)
+        o.seek(0x0c)
+        record_count = read_u32(o)
+        o.seek(o.tell() + 0x24) # skip past dlcIndex + configName
+        records = read_records(o, record_count)
+        target_offset = cur_offset
+        insert_record(records, (0x5C668E56, 0xffffffff, os.path.getsize(drmoutname), target_offset | k_dlc_index))
+        write_u32(f, record_count + 1)
         o.seek(0x10)
-        for i in range(0x10, 0x144):
-            f.write(o.read(1))
-        write_u32(f, 0x5C668E56)
-        write_u32(f, 0xffffffff)
-        outdrmsize = os.path.getsize(drmoutname)
-        write_u32(f, outdrmsize)
-        target_offset = 0xae3000
-        write_u32(f, target_offset | k_dlc_index)
-        o.seek(0x154)
-        stream_copy(o, f, 0x154, 0xae28ba)
-        # for i in range(0x154, 0xae28ba):
-        #     f.write(o.read(1))
-        while f.tell() != target_offset:
-            write_u8(f, 0x0)
-    with open(drmoutname, "rb") as g:
-        for i in range(outdrmsize):
-            f.write(g.read(1))
+        print(f.tell())
+        stream_copy(o, f, 0x10, 0x34) # copy dlcIndex + configName
+        for record in records:
+            write_u32(f, record[0])
+            write_u32(f, record[1])
+            write_u32(f, record[2])
+            write_u32(f, record[3])
+        start_copy_offset = 0x34 + (record_count + 1) * 0x10
+        o.seek(start_copy_offset)
+        stream_copy(o, f, start_copy_offset, os.path.getsize(origtigername))
     for i, s in enumerate(sections):
-        # target_offset = next_valid_offset(target_offset + outdrmsize, 0x800)
-        while f.tell() != s.offset:
-            write_u8(f, 0x0)
+        pad_to(f, s.offset)
         f.write(s.cdrm)
-        # with open(s.file, "rb") as g:
-            # f.write(make_cdrm(g.read(), i == len(sections) - 1))
-            # for i in range(os.path.getsize(s.file)):
-            #     f.write(g.read(1))
+    with open(drmoutname, "rb") as g:
+        print("{:08x} -> {:08x}".format(f.tell(), target_offset))
+        pad_to(f, target_offset)
+        f.write(g.read())
     # write_u32(f, 0xCAFEBABE)
 print(" Wrote to '{}'".format(tigername))
