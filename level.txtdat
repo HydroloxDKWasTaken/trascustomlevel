@@ -70,8 +70,21 @@ pad=12
 str=mytestlevel
 
 align=4
+
+[dummyleveldata]
+ptr=0 ; dtp::LevelData::player_info* m_pPlayer
+uint32=0 ; unsigned int m_playerListCount
+ptr=0 ; unsigned int* m_pCostumes
+uint32=0 ; unsigned int m_costumeListCount
+ptr=0 ; dtp::LevelData::ObjectiveData* m_objectives
+uint32=0 ; unsigned int m_objectivesCount
+ptr=0 ; dtp::PersistentDataGlobalOverride* m_persistentDataGlobalOverrides
+uint32=0 ; unsigned int m_persistentDataGlobalOverridesCount
+ptr=0 ; dtp::PersistentDataInstanceOverride* m_persistentDataInstanceOverrides
+uint32=0 ; unsigned int m_persistentDataInstanceOverridesCount
+
 [gameunitdata]
-ptr=0 ; void* m_pLevelDefault
+ptr=dummyleveldata ; void* m_pLevelDefault
 ptr=0 ; void* m_pLevel
 ptr=0 ; void* m_pWorldDataDefault
 ptr=0 ; void* m_pWorldData
