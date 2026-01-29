@@ -24,6 +24,7 @@ ptr=0 ; dtp::DisabledLightGroups* m_disabledLightGroups
 float32=0 ; float reflectionPlaneZOffset
 float32=-9999 ; float enemyKillAltitude
 ; }
+pad=4 ; Yes, really! This is supposed to be here!
 uint32=0 ; unsigned int m_numNavigationGroup
 ptr=0 ; const char** m_listNavigationGroup
 ; dtp::WindData unitWind
@@ -56,16 +57,76 @@ float32=0 ; float m_HeightBias
 uint32=0 ; unsigned int m_TerrainMarker
 ; }
 ptr=0 ; dtp::UnitData::DTPOverlayData* m_OverlayData
-ptr=0 ; dtp::UnitData::GameUnitData* GameUnitData
+ptr=gameunitdata ; dtp::UnitData::GameUnitData* GameUnitData
 ; dtp::UnitData::LayeredNextGenDataList m_LayeredGraphicsDataList
 ; {
 ptr=0 ; dtp::UnitData::LayeredNextGenData* m_streamGraphicsData
 uint32=0 ; unsigned int m_numStreamGraphicsData
 ; }
-uint32=0 unsigned int m_iNumCinEvents
+uint32=0 ; unsigned int m_iNumCinEvents
 pad=12
 
 [unitnamestr]
 str=mytestlevel
+
+align=4
+[gameunitdata]
+ptr=0 ; void* m_pLevelDefault
+ptr=0 ; void* m_pLevel
+ptr=0 ; void* m_pWorldDataDefault
+ptr=0 ; void* m_pWorldData
+uint32=0 ; unsigned int m_defaultRegion
+uint16=0 ; unsigned short m_pStartCheckpoint
+uint8=0 ; bool m_darkArea
+uint8=0 ; bool m_startUnit
+uint16=-1 ; unsigned short m_visionModeTerrainGroup
+uint8=0 ; bool m_bAllowReducedFramebufferInCombat
+uint8=0 ; bool m_bAllowReducedFramebufferInPreCombat
+uint8=0 ; bool m_bGrappleLengthOverride
+uint8=0 ; bool m_bGrappleAngleOverride
+pad=2
+float32=0 ; float m_grappleFireMaxDistance
+float32=0 ; float m_grappleRopeMinLength
+float32=0 ; float m_grappleRopeMaxLength
+float32=0 ; float m_grappleRopeIdealLength
+float32=0 ; float m_grappleMinimumJumpOffAngle
+float32=0 ; float m_grappleMaximumJumpOffAngle
+uint8=0 ; bool m_overrideSkydome
+pad=1
+uint16=0 ; unsigned short m_skydome
+float32=0 ; float m_skydomeRotation
+uint8=0 ; bool m_killSkydome
+pad=3
+ptr=0 ; dtp::UnitData::SkydomeData* m_streamLayerSkydomes
+uint32=0 ; unsigned int m_streamLayerSkydomesCount
+uint8=0 ; unsigned char m_requiredContentPackID
+pad=3
+; dtp::UnitData::WetLightData m_wetLightData
+; {
+    ptr=0 ; cdc::TextureMap* TopNormalMap
+    float32=0 ; float TopNormalScale
+    float32=0 ; float TopNormalOffsetting
+    float32=0 ; float TopNormalOffsetFramerate
+    ptr=0 ; cdc::TextureMap* SideNormalMap
+    float32=0 ; float SideNormalScale
+    float32=0 ; float SideNormalScroll
+    ptr=0 ; cdc::TextureMap* PoolingTexture
+    float32=0 ; float PoolingTextureScale
+    float32=0 ; float DiffuseMultiplier
+    float32=0 ; float TopNormalOffsetX
+    float32=0 ; float TopNormalOffsetY
+    float32=0 ; float TopNormalOffsetTime
+; }
+; dtp::BeautySpecData m_beautySpecular
+; {
+    uint8=0 ; unsigned char m_ColorR
+    uint8=0 ; unsigned char m_ColorG
+    uint8=0 ; unsigned char m_ColorB
+    pad=1
+    float32=0 ; float m_Pitch
+    float32=0 ; float m_Yaw
+    uint8=0 ; bool m_FollowCamera
+    pad=3
+; }
 
 str=End of level.txtdat"
