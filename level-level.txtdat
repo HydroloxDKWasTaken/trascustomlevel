@@ -10,7 +10,7 @@ ptr=0 // short** WeatherHeightmapData
 ptr=0 // void* pCdcPlannerData
 ptr=0 // void* pVolumetricPlannerData
 ptr=0 // void* pSoundSpatialData
-ptr=0 // dtp::UnitData* pUnitData
+externptr=7:200001 // dtp::UnitData* pUnitData
 ptr=0 // dtp::ADMD* pADMDData
 // cdc::Vector3 sceneCenterOffset
 // {
