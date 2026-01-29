@@ -137,14 +137,13 @@ with open(drmoutname, "wb") as f:
         # NOPE NEVERMIND^
         # We're going this alone...
         s.offset = cur_offset
-        print("{:08x} {}".format(s.offset, s.file))
+        print("  {:08x} {:08x} {}".format(s.offset, cur_decompressed_offset, s.file))
         write_u32(f, cur_offset | k_dlc_index) # SectionExtraInfo.packedOffset
         with open(s.file, "rb") as sf:
             s.cdrm = make_cdrm(sf.read(), i == len(sections) - 1)
         cur_offset = next_valid_offset(cur_offset + len(s.cdrm), 0x800)
         write_u32(f, len(s.cdrm)) # SectionExtraInfo.compressedSize
         write_u32(f, cur_decompressed_offset) # SectionExtraInfo.decompressedOffset
-        print(" Decompressed offset: {:08x}".format(cur_decompressed_offset))
         cur_decompressed_offset += next_valid_offset(os.path.getsize(s.file), 0x10)
 
 
@@ -192,7 +191,6 @@ with open(tigername, "wb") as f:
         insert_record(records, (0x5C668E56, 0xffffffff, os.path.getsize(drmoutname), target_offset | k_dlc_index))
         write_u32(f, record_count + 1)
         o.seek(0x10)
-        print(f.tell())
         stream_copy(o, f, 0x10, 0x34) # copy dlcIndex + configName
         for record in records:
             write_u32(f, record[0])
@@ -206,7 +204,6 @@ with open(tigername, "wb") as f:
         pad_to(f, s.offset)
         f.write(s.cdrm)
     with open(drmoutname, "rb") as g:
-        print("{:08x} -> {:08x}".format(f.tell(), target_offset))
         pad_to(f, target_offset)
         f.write(g.read())
     # write_u32(f, 0xCAFEBABE)
