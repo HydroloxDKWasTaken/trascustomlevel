@@ -74,9 +74,18 @@ str=mytestlevel
 
 align=4
 
+[playerinfo]
+; objid for 'laracroft'
+uint16=18 ; unsigned short objectID
+pad=2
+; dtp::GameTeam::None
+int32=0 ; int teamID
+ptr=0 ; dtp::InventoryData* inventory
+ptr=0 ; void* playerState
+
 [dummyleveldata]
-ptr=0 ; dtp::LevelData::player_info* m_pPlayer
-uint32=0 ; unsigned int m_playerListCount
+ptr=playerinfo ; dtp::LevelData::player_info* m_pPlayer
+uint32=1 ; unsigned int m_playerListCount
 ptr=0 ; unsigned int* m_pCostumes
 uint32=0 ; unsigned int m_costumeListCount
 ptr=0 ; dtp::LevelData::ObjectiveData* m_objectives
@@ -87,6 +96,7 @@ ptr=0 ; dtp::PersistentDataInstanceOverride* m_persistentDataInstanceOverrides
 uint32=0 ; unsigned int m_persistentDataInstanceOverridesCount
 
 [gameunitdata]
+; NOTE: m_pLevel and m_pWorldData will be set automatically in FixupLevel
 ptr=dummyleveldata ; void* m_pLevelDefault
 ptr=0 ; void* m_pLevel
 ptr=0 ; void* m_pWorldDataDefault
