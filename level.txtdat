@@ -4,7 +4,35 @@ ptr=0 ; cdc::CMeshResource* m_colMesh
 uint32=0 ; dtp::UnitData::UnitFlags m_unitFlags
 uint32=0 ; unsigned int m_numFSFX
 ptr=0 ; dtp::UnitData::FSFXLink* m_pFSFX
-pad=80 ; dtp::UnitData::depthq DepthData
+; dtp::UnitData::depthq DepthData
+; {
+    uint8=0 ; unsigned char backColorR
+    uint8=0 ; unsigned char backColorG
+    uint8=0 ; unsigned char backColorB
+    uint8=0 ; unsigned char waterColorR
+    uint8=0 ; unsigned char waterColorG
+    uint8=0 ; unsigned char waterColorB
+    pad=2
+    int32=0 ; int m_numShadowMaps
+    uint8=0 ; bool m_pssmIsAbsolute
+    pad=3
+    float32=0 ; float m_pssmDistance1
+    float32=0 ; float m_pssmDistance2
+    float32=0 ; float m_pssmDistance3
+    float32=0 ; float m_pssmDistance4
+    float32=1000000 ; float farPlane
+    float32=0 ; float fogFar
+    float32=0 ; float fogNear
+    float32=0 ; float waterFarPlane
+    float32=0 ; float waterFogFar
+    float32=0 ; float waterFogNear
+    uint32=0 ; unsigned int underwater_fxa
+    uint32=0 ; unsigned int abovewater_fxa
+    uint32=0 ; unsigned int WaterFSFX
+    uint32=0 ; unsigned int WaterTransitionFSFX
+    float32=0 ; float TransitionBoundAbove
+    float32=0 ; float TransitionBoundBelow
+; }
 ptr=0 ; dtp::ActionGraph* ActiongraphData
 uint32=0 ; unsigned int m_scriptTypeID
 uint32=0 ; unsigned int m_numStreamingSignals
