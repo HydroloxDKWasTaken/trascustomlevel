@@ -6,6 +6,15 @@ build_ob () {
     if test ${name} -nt ${dest} || [ ! -f ${dest} ]
     then
         ${MKLOADOB} ${name} ${dest}
+        RESULT=$?
+        if [ $RESULT -ne 0 ]
+        then
+            echo ""
+            echo "BUILD ERROR!"
+            echo "Failed to build '${name}'"
+            echo "Check output above for errors!"
+            exit 1
+        fi
         echo "Rebuilt '${name}'"
     fi
 }
