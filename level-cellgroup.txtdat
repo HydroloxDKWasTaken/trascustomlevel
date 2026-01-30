@@ -19,7 +19,7 @@ uint32=0 ; unsigned int symbolTableSize
 
 [cellstreamgroups]
 ptr=cellstreamgroupname ; const char* pName
-ptr=1 ; unsigned int numCells
+uint32=1 ; unsigned int numCells
 ptr=cellstreamgroupcells ; cdc::ISceneCell** ppCells
 ptr=0 ; const char* pStreamFileName
 ptr=0 ; cdc::ResolveObject* pResolveObject
