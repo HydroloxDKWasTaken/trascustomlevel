@@ -265,7 +265,6 @@ pad=12
     ; }
     pad=4
 ; }
-whaterver=asd
 ptr=0 ; unsigned short* BirthObjects
 uint16=0 ; unsigned short WeatherObject
 pad=2
