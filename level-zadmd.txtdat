@@ -4,8 +4,8 @@ ptr=0 ; dtp::cdcRenderLightInstance** m_ppOldLightInstances
 ptr=0 ; dtp::ADMDObjectElement* cdcRenderLightInstances
 uint32=0 ; unsigned int m_numLightInstances
 ptr=0 ; dtp::LightInstance** m_ppLightInstances
-uint32=0 ; unsigned int m_introCount
-ptr=0 ; dtp::Intro** m_ppIntros
+uint32=1 ; unsigned int m_introCount
+ptr=intros ; dtp::Intro** m_ppIntros
 uint32=0 ; unsigned int m_markerCount
 ptr=0 ; dtp::ADMDObjectElement* m_pMarkers
 uint32=0 ; unsigned int m_markupCount
@@ -75,4 +75,152 @@ uint32=0 ; unsigned int numOrbitMagnets
 ptr=0 ; dtp::ADMDObjectElement* orbitMagnetList
 uint32=0 ; unsigned int numUnderWaterRays
 ptr=0 ; dtp::ADMDObjectElement* underwaterRayList
+
+[intros]
+ptr=intro-player
+
+[intro-player]
+; cdc::Euler reversedEulerRotation
+; {
+    float32=0
+    float32=0
+    float32=0
+    float32=0
+; }
+; cdc::Vector3 position
+; {
+    float32=0
+    float32=0
+    float32=0
+    float32=0
+; }
+; cdc::Euler dummy1
+; {
+    float32=0
+    float32=0
+    float32=0
+    float32=0
+; }
+; cdc::Vector3 dummy2
+; {
+    float32=0
+    float32=0
+    float32=0
+    float32=0
+; }
+; cdc::Vector3 scale
+; {
+    float32=0
+    float32=0
+    float32=0
+    float32=0
+; }
+; objid for 'player'
+uint16=52 ; unsigned short objectID
+uint16=0 ; unsigned short intronum
+ptr=intro-player-debugname ; const char* m_pDebugName
+uint32=210000; unsigned int UniqueID
+float32=0 ; float maxRad
+uint16=-1 ; unsigned short m_startAnimation
+; bitfield
+; {
+    ; bool m_placeInExteriorCell : 1
+    ; bool playToFlag : 1
+    ; bool useClip : 1
+    ; bool forceForward : 1
+    ; bool forceBackward : 1
+    ; bool m_waitLevelStart : 1
+    ; bool m_positionChanged : 1
+    ; char __bitfieldpadding12 : 1
+    uint8=0
+; }
+pad=1 ; char __alignment_padding19_0
+; bitfield
+; {
+    ; unsigned int splineplaymode : 4
+    ; int __bitfieldpadding19 : 28
+    uint32=0
+; }
+ptr=0 ; cdc::MultiSpline* multiSpline
+int16=-1 ; short startFrame
+int16=-1 ; short endFrame
+uint8=0 ; bool m_isReflection
+uint8=0 ; bool m_isCutsceneReflection
+pad=2
+uint32=-1 ; unsigned int m_markerInstanceID
+uint32=-1 ; unsigned int m_reflectionMarker
+; dtp::introTemplateData templateData
+; {
+    ; bitfield
+    ; {
+        ; bool directionFlag : 1
+        ; bool useminiinstance : 1
+        ; bool useIntroScale : 1
+        ; bool ForceSave : 1
+        ; bool NoSave : 1
+        ; bool CinematicNoKill : 1
+        ; bool Disabled : 1
+        ; bool StayPut : 1
+        ; bool Hidden2 : 1
+        ; bool USED_BY_THE_GAME_inserted_live : 1
+        ; bool USED_BY_THE_GAME_no_object : 1
+        ; bool USED_BY_THE_GAME_no_regen : 1
+        ; bool USED_BY_THE_GAME_queued : 1
+        ; bool IntroduceWhenUnitLoads : 1
+        ; bool IndividualRadialIntroduction : 1
+        ; bool forceUpright : 1
+        ; bool Networked : 1
+        ; bool canRenderInReflection : 1
+        ; bool CinematicKeepCollisionOn : 1
+        ; char __bitfieldpadding16 : 5
+        ; <padding> (1 bytes)
+        uint32=0
+    ; }
+    ptr=0 ; dtp::ActionGraphWithInputOutputStructs* ActiongraphData
+    ptr=0 ; IntroData* data
+    float32=10000 ; float m_introductionDistance
+    float32=0 ; float m_introductionRemoveSlack
+    float32=0 ; float m_introductionFadeRange
+    ; dtp::GameTeam::None
+    int32=0 ; int m_TeamID
+    uint16=-1 ; unsigned short m_ProgressionRank
+    uint8=0 ; bool m_NetSyncFX
+    pad=1
+    ptr=0 ; dtp::introTemplateData::PersistentDataDefault* m_persistentDataDefaults
+    uint32=0; unsigned int m_persistentDataCount
+    ; bitfield
+    ; {
+        ; bool EnableMarkUp : 1
+        ; char __bitfieldpadding33 : 7
+        uint8=0
+    ; }
+    pad=3
+    ; dtp::GameRulesInstanceTagData m_gameRulesTagData
+    ; {
+          ; int m_type
+          ; unsigned int m_index
+    ; }
+; }
+uint32=-1 ; unsigned int m_scriptTypeID
+ptr=0 ; void* m_scriptIntroData
+uint32=-1 ; unsigned int m_streamLayer
+ptr=0 ; dtp::IMFRef* m_pParentImfRef
+uint8=0 ; bool m_useParentImfLOD
+pad=3
+int32=0 ; int m_fxOverride
+ptr=0 ; dtp::Intro::fxliboverride* m_fxliboverride_dynamicitem
+uint32=0 ; unsigned int m_introDepCount
+ptr=0 ; dtp::Intro::UnitIntro* m_IntroDeps
+pad=12
+; cdc::Vector3 m_newPosition
+; {
+    float32=0
+    float32=0
+    float32=0
+    float32=0
+; }
+
+[intro-player-debugname]
+str=player-tras1
+
 str=End of level-zadmd.txtdat"
