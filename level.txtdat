@@ -74,13 +74,25 @@ str=mytestlevel
 
 align=4
 
+[inventorydata]
+ptr=0 ; dtp::AmmoListItem* m_pAmmoList
+uint32=0 ; unsigned int m_ammoListCount
+ptr=0 ; unsigned short* weapon_list
+uint32=0 ; unsigned int m_weaponListCount
+ptr=0 ; unsigned short* gear_list
+uint32=0 ; unsigned int m_gearListCount
+; dtp::InventoryStateEnum m_initialInventoryState
+; {
+    uint32=0 ; unsigned int m_hash
+; }
+
 [playerinfo]
 ; objid for 'laracroft'
 uint16=18 ; unsigned short objectID
 pad=2
 ; dtp::GameTeam::None
 int32=0 ; int teamID
-ptr=0 ; dtp::InventoryData* inventory
+ptr=inventorydata ; dtp::InventoryData* inventory
 ptr=0 ; void* playerState
 
 [dummyleveldata]
