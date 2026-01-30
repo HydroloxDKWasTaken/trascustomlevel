@@ -2,17 +2,102 @@
 ptr=header ; cdc::CellGroupDataHeader* pHeader
 externptr=7:200002 ; dtp::ADMD* pADMD
 ptr=0 ; cdc::CellBSPNodeData* pBSPNodes
-ptr=0 ; cdc::CellStreamGroupData* pStreamGroups
+ptr=cellstreamgroups ; cdc::CellStreamGroupData* pStreamGroups
 ptr=0 ; const char** ppSymbols
-ptr=0 ; cdc::CellData** ppCells
+ptr=cells ; cdc::CellData** ppCells
 ptr=0 ; cdc::CellStreamData* pVoidTerrain
 ptr=0 ; cdc::CellStreamData* pExteriorTerrain
 
 [header]
-uint32=0 ; unsigned int numTotalCells
-uint32=0 ; unsigned int numToplevelCells
+uint32=1 ; unsigned int numTotalCells
+uint32=1 ; unsigned int numToplevelCells
 uint32=0 ; unsigned int numBSPNodes
 uint32=0 ; unsigned int numStreamGroups
 uint32=0 ; unsigned int numSymbols
 uint32=0 ; unsigned int numPortalSymbols
 uint32=0 ; unsigned int symbolTableSize
+
+[cellstreamgroups]
+ptr=cellstreamgroupname ; const char* pName
+ptr=1 ; unsigned int numCells
+ptr=cellstreamgroupcells ; cdc::ISceneCell** ppCells
+ptr=0 ; const char* pStreamFileName
+ptr=0 ; cdc::ResolveObject* pResolveObject
+
+[cellstreamgroupcells]
+ptr=0
+
+[cellstreamgroupname]
+str=default
+
+align=4
+
+[cells]
+ptr=cell
+
+[cell]
+ptr=cellheader ; cdc::CellDataHeader* pHeader
+ptr=0 ; cdc::CellTerrainData* pTerrainData
+ptr=0 ; cdc::CellPortalData* pPortals
+ptr=0 ; cdc::Vector3* pPortalVerts
+ptr=0 ; unsigned int* pOmniPortals
+ptr=0 ; dtp::PortalADMDData** pOmniPortalsADMDData
+ptr=0 ; cdc::CellOccluderData** ppOccluders
+ptr=0 ; cdc::CellBSPNodeData* pBSPNodes
+ptr=0 ; cdc::RenderMesh* pCellMesh
+ptr=0 ; cdc::CellMeshData* pCellPolys
+ptr=0 ; cdc::CellStreamGroupID* pStreamGroups
+
+[cellheader]
+ptr=cellname ; const char* pCellName
+pad=12
+; cdc::CullingAABB bbox
+; {
+    ; cdc::Vector3 m_center
+    ; {
+        float32=0
+        float32=0
+        float32=0
+        float32=0
+    ; }
+    ; cdc::Vector3 m_extents
+    ; {
+        float32=0
+        float32=0
+        float32=0
+        float32=0
+    ; }
+; }
+; cdc::CellSubCellLayout subCellLayout
+; {
+    uint8=0 ; unsigned char xBits
+    uint8=0 ; unsigned char yBits
+    uint8=0 ; unsigned char zBits
+    uint8=0 ; unsigned char zShift
+; }
+uint16=0 ; unsigned short cellIndex
+uint16=0 ; unsigned short uniqueId
+uint16=0 ; unsigned short numTerrainGroups
+uint16=0 ; unsigned short numPortals
+uint16=0 ; unsigned short numPortalVerts
+uint16=0 ; unsigned short numOmniPortals
+uint16=0 ; unsigned short numOccluders
+uint16=0 ; unsigned short numBSPNodes
+uint16=0 ; unsigned short numChildCells
+uint16=0 ; unsigned short numStreamGroups
+uint16=0 ; unsigned short firstChildIndex
+uint16=0 ; unsigned short flags
+uint32=-1 ; unsigned int debugColor
+; cdc::CellStreamInfo streamInfo
+; {
+    ptr=cellstreamgroups ; cdc::CellStreamGroupData* pStreamGroup
+    uint32=0 ; unsigned int streamDataID
+; }
+; cdc::CellIMFRefData imfRefData
+; {
+    ptr=0 ; cdc::CellIMFData* pImfData
+    ptr=0 ; dtp::IMFRef* pImfRef
+; }
+
+[cellname]
+str=cell_mytestlevel-tras1
