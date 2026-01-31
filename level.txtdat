@@ -46,72 +46,74 @@ pad=12
 ; {
     ; dtp::GlobalAmbient globalAmbient
     ; {
-        uint8=0 ; unsigned char colorR
-        uint8=0 ; unsigned char colorG
-        uint8=0 ; unsigned char colorB
+        uint8=255 ; unsigned char colorR
+        uint8=255 ; unsigned char colorG
+        uint8=255 ; unsigned char colorB
         pad=1
-        float32=0 ; float intensity
+        float32=0.3 ; float intensity
     ; }
     ; dtp::NonLinearHeightFogData nlhFogData
     ; {
         uint8=0 ; bool m_distanceFogEnabled
         pad=3
         uint32=0 ; unsigned int m_distanceColor
-        float32=0 ; float m_distanceNear
-        float32=0 ; float m_distanceFar
-        pad=256 ; unsigned char m_distanceCurve[256]
+        float32=1000 ; float m_distanceNear
+        float32=20000 ; float m_distanceFar
+        uint8=0 ; unsigned char m_distanceCurve[256]
+        repeat=255:1
         uint8=0 ; bool m_heightFogEnabled
         pad=3
         uint32=0 ; unsigned int m_heightColor
         float32=0 ; float m_heightBottom
-        float32=0 ; float m_heightTop
-        pad=256 ; unsigned char m_heightCurve[256]
+        float32=1000 ; float m_heightTop
+        uint8=0 ; unsigned char m_heightCurve[256]
+        repeat=255:1
     ; }
     pad=8
     ; dtp::SSAOSystem ssao
     ; {
-        uint8=0 ; bool ssaoEnabled
+        uint8=1 ; bool ssaoEnabled
         pad=3
-        float32=0 ; float worldSampleRadius
-        float32=0 ; float worldSampleFalloffDistance
-        float32=0 ; float worldSampleDirectionality
-        float32=0 ; float ssaoStrength
-        float32=0 ; float overallScale
-        float32=0 ; float overallMax
-        float32=0 ; float bias
-        float32=0 ; float depthThreshold
-        float32=0 ; float blurDepthThreshold
-        float32=0 ; float blurDepthFalloff
-        float32=0 ; float blurSigma
+        float32=40 ; float worldSampleRadius
+        float32=40 ; float worldSampleFalloffDistance
+        float32=2 ; float worldSampleDirectionality
+        float32=0.85 ; float ssaoStrength
+        float32=5 ; float overallScale
+        float32=0.65 ; float overallMax
+        float32=0.1 ; float bias
+        float32=75 ; float depthThreshold
+        float32=20 ; float blurDepthThreshold
+        float32=20 ; float blurDepthFalloff
+        float32=2.4 ; float blurSigma
     ; }
     ; dtp::DepthBlurData depthBlurData
     ; {
         uint8=0 ; bool blurEnabled
         pad=3
-        float32=0 ; float blurStart
-        float32=0 ; float blurEnd
-        float32=0 ; float blurStrength
+        float32=6000 ; float blurStart
+        float32=10000 ; float blurEnd
+        float32=75 ; float blurStrength
     ; }
     ; dtp::BlurVignetteData blurVignetteData
     ; {
         uint8=0 ; bool vignetteBlurEnabled
         pad=3
-        float32=0 ; float vignetteBlurInnerRadius
-        float32=0 ; float vignetteBlurOuterRadius
-        float32=0 ; float vignetteBlurAmount
+        float32=0.5 ; float vignetteBlurInnerRadius
+        float32=1 ; float vignetteBlurOuterRadius
+        float32=50 ; float vignetteBlurAmount
     ; }
     ; dtp::ColorVignetteData colorVignetteData
     ; {
         uint8=0 ; bool vignetteColorEnabled
         pad=3
         float32=0 ; float vignetteColorInnerRadius
-        float32=0 ; float vignetteColorOuterRadius
-        float32=0 ; float vignetteColorAmount
+        float32=1 ; float vignetteColorOuterRadius
+        float32=500 ; float vignetteColorAmount
         uint32=0 ; unsigned int vignetteColor
         uint32=0 ; unsigned int vignetteInnerColor
         float32=0 ; float vignetteInnerColorAmount
-        float32=0 ; float vignetteCenterPoint[2]
-        float32=0
+        float32=0.5 ; float vignetteCenterPoint[2]
+        float32=0.5
     ; }
     pad=12
     ; dtp::ColorCorrection colorCorrection
@@ -121,45 +123,48 @@ pad=12
         ; dtp::ColorCorrection::ColorLevels intensityLevels
         ; {
             float32=0 ; float inputRange[2]
-            float32=0
+            float32=255
             float32=0 ; float outputRange[2]
-            float32=0
-            float32=0 ; float gamma
+            float32=255
+            float32=1 ; float gamma
         ; }
+        ; TODO - curves!
         pad=1024 ; float intensityCurve[256]
         uint8=0 ; bool ccSaturationEnabled
         pad=3
         float32=0 ; float saturation
-        pad=1024 ; float intensitySaturation[256]
+        float32=0.5 ; float intensitySaturation[256]
+        repeat=255:4
         uint8=0 ; bool ccTintEnabled
         pad=3
         ; dtp::MyColorBar intensityColorTint
         ; {
-            pad=128 ; int samplepoints[32]
+            int32=-1 ; int samplepoints[32]
+            repeat=31:4
         ; }
         uint8=0 ; bool ccFilmGrainEnabledV2
         pad=3
-        float32=0 ; float ccFilmGrainStrength
+        float32=0.6 ; float ccFilmGrainStrength
         pad=4
     ; }
     ; dtp::MotionBlurData motionBlur
     ; {
-        float32=0 ; float minAngleToActivate
-        float32=0 ; float minDistanceToActivate
-        float32=0 ; float activationTime
-        uint8=1 ; bool disabled
+        float32=4 ; float minAngleToActivate
+        float32=30 ; float minDistanceToActivate
+        float32=0.5 ; float activationTime
+        uint8=0 ; bool disabled
         pad=3
-        float32=0 ; float minSpeedPercent
-        float32=0 ; float maxSpeedPercent
-        float32=0 ; float blurLengthScale
-        float32=0 ; float decayRate
-        uint8=0 ; bool localEnabled
+        float32=8 ; float minSpeedPercent
+        float32=25 ; float maxSpeedPercent
+        float32=0.5 ; float blurLengthScale
+        float32=0.95 ; float decayRate
+        uint8=1 ; bool localEnabled
         pad=3
         float32=0 ; float localDamper
-        uint8=0 ; bool doCutDetection
+        uint8=1 ; bool doCutDetection
         pad=3
-        float32=0 ; float cutAngleThresholdDegs
-        float32=0 ; float cutDistThreshold
+        float32=15 ; float cutAngleThresholdDegs
+        float32=20 ; float cutDistThreshold
     ; }
     ; dtp::ScatterBloomData scatterBloomData
     ; {
@@ -167,73 +172,73 @@ pad=12
         pad=3
         float32=0 ; float sunPitch
         float32=0 ; float sunYaw
-        float32=0 ; float skyGamma
-        float32=0 ; float skyIntensity
+        float32=3.5 ; float skyGamma
+        float32=0.1 ; float skyIntensity
         float32=0 ; float sunSize
-        float32=0 ; float sunFalloff
-        float32=0 ; float sunIntensity
+        float32=0.05 ; float sunFalloff
+        float32=0.1 ; float sunIntensity
         ; dtp::ScatterBloomData::LightScatterData scatterData
         ; {
             uint8=0 ; bool enabled
             pad=3
-            float32=0 ; float length
-            float32=0 ; float intensity
-            float32=0 ; float maxIntensity
-            float32=0 ; float decayPower
+            float32=0.7 ; float length
+            float32=1.5 ; float intensity
+            float32=0.8 ; float maxIntensity
+            float32=0.7 ; float decayPower
         ; }
         ; dtp::ScatterBloomData::BloomData bloomData
         ; {
-            uint8=0 ; bool enabled
+            uint8=1 ; bool enabled
             pad=3
-            float32=0 ; float smallIntensity
-            float32=0 ; float mediumIntensity
-            float32=0 ; float largeIntensity
-            float32=0 ; float smallSigma
-            float32=0 ; float mediumSigma
-            float32=0 ; float largeSigma
-            float32=0 ; float smallSigmaAspect
-            float32=0 ; float mediumSigmaAspect
-            float32=0 ; float largeSigmaAspect
+            float32=1.5 ; float smallIntensity
+            float32=1 ; float mediumIntensity
+            float32=1.5 ; float largeIntensity
+            float32=1 ; float smallSigma
+            float32=2.7 ; float mediumSigma
+            float32=2.5 ; float largeSigma
+            float32=1 ; float smallSigmaAspect
+            float32=1 ; float mediumSigmaAspect
+            float32=1 ; float largeSigmaAspect
             float32=0 ; float smallRange[2]
-            float32=0
-            float32=0 ; float mediumRange[2]
-            float32=0
-            float32=0 ; float largeRange[2]
-            float32=0
-            float32=0 ; float maxSpecularBloom
+            float32=1
+            float32=0.3 ; float mediumRange[2]
+            float32=0.8
+            float32=0.5 ; float largeRange[2]
+            float32=1
+            float32=0.5 ; float maxSpecularBloom
         ; }
     ; }
     ; dtp::TonemapData tonemapData
     ; {
         float32=0 ; float exposure
-        float32=0 ; float whitePoint
-        float32=0 ; float bloomScale
-        float32=0 ; float bloomOverbrightMin
-        float32=0 ; float bloomOverbrightMax
+        float32=1 ; float whitePoint
+        float32=1 ; float bloomScale
+        float32=0.5 ; float bloomOverbrightMin
+        float32=1.5 ; float bloomOverbrightMax
         uint8=0 ; bool autoTonemapEnabled
         pad=3
-        float32=0 ; float middleGray
-        float32=0 ; float rampInRate
-        uint8=0 ; bool tonemapEnabled
+        float32=0.08 ; float middleGray
+        float32=0.85 ; float rampInRate
+        uint8=1 ; bool tonemapEnabled
         pad=3
-        float32=0 ; float tonemapBias
-        float32=0 ; float tonemapShoulderStrength
-        float32=0 ; float tonemapLinearStrength
-        float32=0 ; float tonemapToeStrength
-        float32=0 ; float tonemapWeight
+        float32=0.0015 ; float tonemapBias
+        float32=0.3 ; float tonemapShoulderStrength
+        float32=0.35 ; float tonemapLinearStrength
+        float32=0.1 ; float tonemapToeStrength
+        float32=1 ; float tonemapWeight
     ; }
     ; dtp::RimRenderData rimRenderData
     ; {
-        uint8=0 ; unsigned char m_rimColorR
-        uint8=0 ; unsigned char m_rimColorG
-        uint8=0 ; unsigned char m_rimColorB
+        uint8=198 ; unsigned char m_rimColorR
+        uint8=198 ; unsigned char m_rimColorG
+        uint8=165 ; unsigned char m_rimColorB
         pad=1
-        float32=0 ; float m_distanceMax
-        float32=0 ; float m_distanceMin
-        float32=0 ; float m_powerMax
-        float32=0 ; float m_powerMin
-        float32=0 ; float m_intensityMax
-        float32=0 ; float m_intensityMin
+        float32=1500 ; float m_distanceMax
+        float32=500 ; float m_distanceMin
+        float32=1 ; float m_powerMax
+        float32=1 ; float m_powerMin
+        float32=25 ; float m_intensityMax
+        float32=5 ; float m_intensityMin
     ; }
     ; dtp::LODScaleData lodScaleData
     ; {
@@ -242,15 +247,16 @@ pad=12
     ; dtp::SecondaryAmbient secondaryAmbient
     ; {
         uint8=0 ; bool enabled
-        uint8=0 ; unsigned char colorR
-        uint8=0 ; unsigned char colorG
-        uint8=0 ; unsigned char colorB
-        float32=0 ; float intensity
+        uint8=255 ; unsigned char colorR
+        uint8=255 ; unsigned char colorG
+        uint8=255 ; unsigned char colorB
+        float32=0.15 ; float intensity
     ; }
     ; dtp::SphericalHarmonic sphericalHarmonic
     ; {
-        pad=108 ; float cubeMap[27]
-        float32=0 ; float scale
+        float32=0 ; float cubeMap[27]
+        repeat=26:4
+        float32=0.5 ; float scale
     ; }
     ; dtp::BeautySpecData beautySpecular
     ; {
