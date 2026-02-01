@@ -14,6 +14,18 @@ class Section:
     is_primary: bool
     no_reloc: bool
     offset: int
+    res_type: int
+
+def get_typnum(s):
+    if s == "tex":
+        return 5
+    elif s == "dtp":
+        return 7
+    elif s == "mat":
+        return 10
+    elif s == "model":
+        return 12
+    return None
 
 def write_u8(f, u): f.write(struct.pack('B', u))
 def read_u8(f): return struct.unpack('B', f.read(1))[0]
@@ -41,6 +53,10 @@ def next_valid_offset(offset, align):
 def get_extension(section):
     if section.typ == "dtp":
         return ".tr9dtp"
+    elif section.typ == "mat":
+        return ".tr9material"
+    elif section.typ == "model":
+        return ".tr9model"
     print("Unknown section type '{}'".format(section.typ))
 
 def make_cdrm(buf, dont_write_next = False):
@@ -92,6 +108,9 @@ with open(drmname, "r") as f:
         flags = s[3:]
         is_primary = "primary" in flags
         no_reloc = "no_reloc" in flags
+        for f in flags:
+            if f.startswith("rt="):
+                s.res_type = int(f[3:])
         sections.append(Section(typ, id_, file, None, is_primary, no_reloc, 0))
         ext = get_extension(sections[-1])
         shutil.copyfile(file, "customlevel_bin/" + str(id_) + ext)
@@ -121,12 +140,21 @@ with open(drmoutname, "wb") as f:
         reloc_size = get_reloc_size(s.file) if not s.no_reloc else 0
         size = os.path.getsize(s.file) - reloc_size
         write_u32(f, size) # SectionInfo.size
-        if s.typ == "dtp":
-            write_u8(f, 0x7) # SectionInfo.type
+        write_u8(f, get_typnum(s.typ)) # SectionInfo.type
         write_u8(f, 0x0) # misc flags...
         write_u8(f, 0x0)
         write_u8(f, 0x0)
+        resource_type = 0
         packed = reloc_size << 8
+        if s.res_type is not None:
+            resource_type = s.res_type
+        elif s.typ == "tex":
+            resource_type = 0x5
+        elif s.typ == "mat":
+            resource_type = 0x12
+        elif s.typ == "model":
+            resource_type = 0x1a
+        packed = packed | resource_type << 1
         write_u32(f, packed) # SectionInfo.packed
         write_u32(f, s.id_) # Section.id
         write_u32(f, 0xffffffff) # Section.specMask
