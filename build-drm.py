@@ -7,14 +7,19 @@ import sys
 
 @dataclass
 class Section:
-    typ: str
-    id_: str
-    file: str
-    cdrm: bytes
-    is_primary: bool
-    no_reloc: bool
-    offset: int
-    res_type: int
+    typ: str = ""
+    id_: str = ""
+    file: str = ""
+    cdrm: bytes = bytes()
+    is_primary: bool = False
+    already_in_archive: bool = False
+    size: int = 0
+    reloc_size: int = -1
+    res_type: int = -1
+    # only for resources already in archive
+    offset: int = 0
+    compressed_size: int = 0
+    decompressed_offset = 0
 
 def get_typnum(s):
     if s == "tex":
@@ -106,16 +111,37 @@ with open(drmname, "r") as f:
         id_ = int(s[1])
         file = s[2]
         flags = s[3:]
-        is_primary = "primary" in flags
-        no_reloc = "no_reloc" in flags
+        section = Section()
+        section.typ = typ
+        section.id_ = id_
+        section.file = file
+        section.is_primary = "primary" in flags
+        section.already_in_archive = file == "-"
+        print(section)
+        section.offset = 0
         for f in flags:
             if f.startswith("rt="):
-                s.res_type = int(f[3:])
-        sections.append(Section(typ, id_, file, None, is_primary, no_reloc, 0))
-        ext = get_extension(sections[-1])
-        shutil.copyfile(file, "customlevel_bin/" + str(id_) + ext)
-        print(" Copied '{}' to '{}{}'".format(file, id_, ext))
-        if is_primary:
+                section.res_type = int(f[3:])
+            elif f.startswith("offset="):
+                section.offset = int(f[7:], base=16)
+            elif f.startswith("cs="):
+                section.compressed_size = int(f[3:], base=0)
+            elif f.startswith("rs="):
+                section.reloc_size = int(f[3:], base=0)
+            elif f.startswith("size="):
+                section.size = int(f[5:], base=0)
+            elif f.startswith("doffset="):
+                section.decompressed_offset = int(f[8:], base=16)
+        if not section.already_in_archive:
+            section.size = os.path.getsize(file)
+            ext = get_extension(section)
+            shutil.copyfile(file, "customlevel_bin/" + str(id_) + ext)
+            print(" Copied '{}' to '{}{}'".format(file, id_, ext))
+        else:
+            section.id_ += 2**32 - 400000
+        section.reloc_size = get_reloc_size(section.file) if section.reloc_size == -1 else section.reloc_size
+        sections.append(section)
+        if section.is_primary:
             if primary_section != -1:
                 print("Multiple primary sections in drm")
             primary_section = i
@@ -137,16 +163,14 @@ with open(drmoutname, "wb") as f:
     write_u32(f, primary_section) # DRMHeader.primarySection
 
     for s in sections:
-        reloc_size = get_reloc_size(s.file) if not s.no_reloc else 0
-        size = os.path.getsize(s.file) - reloc_size
-        write_u32(f, size) # SectionInfo.size
+        write_u32(f, s.size) # SectionInfo.size
         write_u8(f, get_typnum(s.typ)) # SectionInfo.type
         write_u8(f, 0x0) # misc flags...
         write_u8(f, 0x0)
         write_u8(f, 0x0)
         resource_type = 0
-        packed = reloc_size << 8
-        if s.res_type is not None:
+        packed = s.reloc_size << 8
+        if s.res_type != -1:
             resource_type = s.res_type
         elif s.typ == "tex":
             resource_type = 0x5
@@ -159,20 +183,23 @@ with open(drmoutname, "wb") as f:
         write_u32(f, s.id_) # Section.id
         write_u32(f, 0xffffffff) # Section.specMask
     for i, s in enumerate(sections):
-        unique_id = s.id_ | 7 << 25 # TODO: hardcode 'dtp' type
+        unique_id = s.id_ | get_typnum(s.typ) << 25 # TODO: hardcode 'dtp' type
         write_u32(f, unique_id) # SectionExtraInfo.uniqueId
-        # luckily, arc MM will take care of these for us for custom sections
-        # NOPE NEVERMIND^
-        # We're going this alone...
-        s.offset = cur_offset
-        print("  {:08x} {:08x} {}".format(s.offset, cur_decompressed_offset, s.file))
-        write_u32(f, cur_offset | k_dlc_index) # SectionExtraInfo.packedOffset
-        with open(s.file, "rb") as sf:
-            s.cdrm = make_cdrm(sf.read(), i == len(sections) - 1)
-        cur_offset = next_valid_offset(cur_offset + len(s.cdrm), 0x800)
-        write_u32(f, len(s.cdrm)) # SectionExtraInfo.compressedSize
-        write_u32(f, cur_decompressed_offset) # SectionExtraInfo.decompressedOffset
-        cur_decompressed_offset += next_valid_offset(os.path.getsize(s.file), 0x10)
+        if s.already_in_archive:
+            print("  {:08x} {:08x} {} {}{}".format(s.offset, s.decompressed_offset, s.file, s.id_, get_extension(s)))
+            write_u32(f, s.offset) # SectionExtraInfo.packedOffset
+            write_u32(f, s.compressed_size) # SectionExtraInfo.compressedSize
+            write_u32(f, s.decompressed_offset) # SectionExtraInfo.decompressedOffset
+        else:
+            s.offset = cur_offset
+            print("  {:08x} {:08x} {}".format(s.offset, cur_decompressed_offset, s.file))
+            write_u32(f, cur_offset | k_dlc_index) # SectionExtraInfo.packedOffset
+            with open(s.file, "rb") as sf:
+                s.cdrm = make_cdrm(sf.read(), i == len(sections) - 1)
+            cur_offset = next_valid_offset(cur_offset + len(s.cdrm), 0x800)
+            write_u32(f, len(s.cdrm)) # SectionExtraInfo.compressedSize
+            write_u32(f, cur_decompressed_offset) # SectionExtraInfo.decompressedOffset
+            cur_decompressed_offset += next_valid_offset(os.path.getsize(s.file), 0x10)
 
 
 
@@ -229,6 +256,8 @@ with open(tigername, "wb") as f:
         o.seek(start_copy_offset)
         stream_copy(o, f, start_copy_offset, os.path.getsize(origtigername))
     for i, s in enumerate(sections):
+        if s.already_in_archive:
+            continue
         pad_to(f, s.offset)
         f.write(s.cdrm)
     with open(drmoutname, "rb") as g:
