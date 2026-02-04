@@ -103,6 +103,7 @@ print("Building drm '{}'...".format(drmname))
 
 sections = []
 primary_section = -1
+preloads = []
 
 with open(drmname, "r") as f:
     for line in f:
@@ -111,43 +112,54 @@ with open(drmname, "r") as f:
 
         s = line.split()
         typ = s[0]
-        id_ = int(s[1])
-        file = s[2]
-        flags = s[3:]
-        section = Section()
-        section.typ = typ
-        section.id_ = id_
-        section.file = file
-        section.is_primary = "primary" in flags
-        section.already_in_archive = file == "-"
-        print(section)
-        section.offset = 0
-        for f in flags:
-            if f.startswith("rt="):
-                section.res_type = int(f[3:])
-            elif f.startswith("offset="):
-                section.offset = int(f[7:], base=16)
-            elif f.startswith("cs="):
-                section.compressed_size = int(f[3:], base=0)
-            elif f.startswith("rs="):
-                section.reloc_size = int(f[3:], base=0)
-            elif f.startswith("size="):
-                section.size = int(f[5:], base=0)
-            elif f.startswith("doffset="):
-                section.decompressed_offset = int(f[8:], base=16)
-        if not section.already_in_archive:
-            section.size = os.path.getsize(file)
-            ext = get_extension(section)
-            shutil.copyfile(file, "customlevel_bin/" + str(id_) + ext)
-            print(" Copied '{}' to '{}{}'".format(file, id_, ext))
+        if typ == "preload":
+            preloads.append(s[1])
         else:
-            section.id_ += 2**32 - 400000
-        section.reloc_size = get_reloc_size(section.file) if section.reloc_size == -1 else section.reloc_size
-        sections.append(section)
-        if section.is_primary:
-            if primary_section != -1:
-                print("Multiple primary sections in drm")
-            primary_section = len(sections) - 1
+            id_ = int(s[1])
+            file = s[2]
+            flags = s[3:]
+            section = Section()
+            section.typ = typ
+            section.id_ = id_
+            section.file = file
+            section.is_primary = "primary" in flags
+            section.already_in_archive = file == "-"
+            print(section)
+            section.offset = 0
+            for f in flags:
+                if f.startswith("rt="):
+                    section.res_type = int(f[3:])
+                elif f.startswith("offset="):
+                    section.offset = int(f[7:], base=16)
+                elif f.startswith("cs="):
+                    section.compressed_size = int(f[3:], base=0)
+                elif f.startswith("rs="):
+                    section.reloc_size = int(f[3:], base=0)
+                elif f.startswith("size="):
+                    section.size = int(f[5:], base=0)
+                elif f.startswith("doffset="):
+                    section.decompressed_offset = int(f[8:], base=16)
+            if not section.already_in_archive:
+                section.size = os.path.getsize(file)
+                ext = get_extension(section)
+                shutil.copyfile(file, "customlevel_bin/" + str(id_) + ext)
+                print(" Copied '{}' to '{}{}'".format(file, id_, ext))
+            else:
+                section.id_ += 2**32 - 400000
+            section.reloc_size = get_reloc_size(section.file) if section.reloc_size == -1 else section.reloc_size
+            section.size -= section.reloc_size
+            sections.append(section)
+            if section.is_primary:
+                if primary_section != -1:
+                    print("Multiple primary sections in drm")
+                primary_section = len(sections) - 1
+
+def get_preloads_bytes():
+    b = bytes()
+    for preload in preloads:
+        b += preload.encode()
+        b += b'\00'
+    return b
 
 k_dlc_index = 69 << 4
 tigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.tiger"
@@ -156,8 +168,9 @@ cur_offset = next_valid_offset(os.path.getsize(origtigername) + 0x800, 0x800)
 cur_decompressed_offset = 0x0
 prev_total_uncompressed_size = 0
 with open(drmoutname, "wb") as f:
+    preload_b = get_preloads_bytes()
     write_u32(f, 0x16) # DRMHeader.versionNumber
-    write_u32(f, 0x0) # DRMHeader.drmIncludeLength
+    write_u32(f, len(preload_b)) # DRMHeader.drmIncludeLength
     write_u32(f, 0x0) # DRMHeader.drmDepLength
     write_u32(f, 0x0) # DRMHeader.paddingLength
     write_u32(f, 0x0) # DRMHeader.projectedDRMSize
@@ -185,6 +198,7 @@ with open(drmoutname, "wb") as f:
         write_u32(f, packed) # SectionInfo.packed
         write_u32(f, s.id_) # Section.id
         write_u32(f, 0xffffffff) # Section.specMask
+    f.write(preload_b)
     for i, s in enumerate(sections):
         unique_id = s.id_ | get_typnum(s.typ) << 25 # TODO: hardcode 'dtp' type
         write_u32(f, unique_id) # SectionExtraInfo.uniqueId
