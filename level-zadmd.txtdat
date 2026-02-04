@@ -108,7 +108,7 @@ ptr=imfref-level-mesh
         float32=0
         float32=0
         float32=0
-        float32=10
+        float32=1
     ; }
 ; }
 ptr=0 ; dtp::IMFRef::FixedMatrix* m_pFixedTransform
