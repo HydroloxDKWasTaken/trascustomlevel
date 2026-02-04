@@ -84,7 +84,7 @@ ptr=imfref-level-mesh
 ; {
     ; cdc::Vector4 col0
     ; {
-        float32=1
+        float32=10
         float32=0
         float32=0
         float32=0
@@ -92,7 +92,7 @@ ptr=imfref-level-mesh
     ; cdc::Vector4 col1
     ; {
         float32=0
-        float32=1
+        float32=10
         float32=0
         float32=0
     ; }
@@ -100,7 +100,7 @@ ptr=imfref-level-mesh
     ; { 
         float32=0
         float32=0
-        float32=1
+        float32=10
         float32=0
     ; }
     ; cdc::Vector4 col3
@@ -108,7 +108,7 @@ ptr=imfref-level-mesh
         float32=0
         float32=0
         float32=0
-        float32=1
+        float32=10
     ; }
 ; }
 ptr=0 ; dtp::IMFRef::FixedMatrix* m_pFixedTransform
