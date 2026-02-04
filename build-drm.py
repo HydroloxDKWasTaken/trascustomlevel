@@ -146,8 +146,9 @@ with open(drmname, "r") as f:
                 print(" Copied '{}' to '{}{}'".format(file, id_, ext))
             else:
                 section.id_ += 2**32 - 400000
-            section.reloc_size = get_reloc_size(section.file) if section.reloc_size == -1 else section.reloc_size
-            section.size -= section.reloc_size
+            if section.reloc_size == -1:
+                section.reloc_size = get_reloc_size(section.file)
+                section.size -= section.reloc_size
             sections.append(section)
             if section.is_primary:
                 if primary_section != -1:
