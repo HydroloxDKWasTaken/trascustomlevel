@@ -1,0 +1,16 @@
+[imf]
+uint32=2 ; unsigned int m_type
+; union dtp::IntermediateMesh::IMFResourceData m_resData
+; {
+    ; blank, this is a mesh IMF ; cdc::CellIMFDataList* pCellImfDataList
+    resourceptr=12:200004 ; cdc::RenderMesh* pRenderModel
+; }
+ptr=0 ; cdc::CMeshResource* m_colMesh
+uint8=0 ; bool m_stream
+pad=3
+float32=9999 ; float m_introductionDistance
+int32=0 ; int m_defaultChunkSize
+uint8=0 ; bool m_instanceCollision
+uint8=0 ; bool m_useDistanceToBoundaryForLOD
+pad=6
+pad=112 ; dtp::LODLevels m_lodLevels

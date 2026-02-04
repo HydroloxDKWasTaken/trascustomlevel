@@ -2,3 +2,11 @@ dtp 200000 level-level.dat primary
 dtp 200001 level.dat
 dtp 200002 level-zadmd.dat
 dtp 200003 level-cellgroup.dat
+model 200004 level-mesh.tr9modeldata
+dtp 200005 level-meshimf.dat
+; Preload globaldebuginfo, which has mtl:29561
+;preload globaldebuginfo
+; And squib, which has mtl:24925
+;preload squib
+; But this is really the correct way to do it...:
+; mat 29651 - offset=2ea5c802 doffset=4646f2f0 cs=777 size=3312 rs=384

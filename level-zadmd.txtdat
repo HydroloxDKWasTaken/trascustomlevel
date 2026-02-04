@@ -43,8 +43,8 @@ uint32=0 ; unsigned int m_cellCount
 ptr=0 ; dtp::ADMDObjectElement* m_pCells
 uint32=0 ; unsigned int m_portalCount
 ptr=0 ; dtp::ADMDObjectElement* m_pPortals
-uint32=0 ; unsigned int m_imfRefCount
-ptr=0 ; dtp::IMFRef** m_ppImfRefs
+uint32=1 ; unsigned int m_imfRefCount
+ptr=imfrefs ; dtp::IMFRef** m_ppImfRefs
 uint32=0 ; unsigned int m_captureToolMarkerCount
 ptr=0 ; dtp::CaptureToolMarker** m_pCaptureToolMarkers
 uint32=0 ; unsigned int EditableTypeExampleCount
@@ -76,8 +76,105 @@ ptr=0 ; dtp::ADMDObjectElement* orbitMagnetList
 uint32=0 ; unsigned int numUnderWaterRays
 ptr=0 ; dtp::ADMDObjectElement* underwaterRayList
 
+[imfrefs]
+ptr=imfref-level-mesh
+
+[imfref-level-mesh]
+; cdc::Matrix m_transform
+; {
+    ; cdc::Vector4 col0
+    ; {
+        float32=1
+        float32=0
+        float32=0
+        float32=0
+    ; }
+    ; cdc::Vector4 col1
+    ; {
+        float32=0
+        float32=1
+        float32=0
+        float32=0
+    ; }
+    ; cdc::Vector4 col2
+    ; { 
+        float32=0
+        float32=0
+        float32=1
+        float32=0
+    ; }
+    ; cdc::Vector4 col3
+    ; {
+        float32=0
+        float32=0
+        float32=0
+        float32=1
+    ; }
+; }
+ptr=0 ; dtp::IMFRef::FixedMatrix* m_pFixedTransform
+ptr=imfref-level-mesh-debugname ; const char* m_debugName
+ptr=0 ; dtp::IMFRef* m_pParentImfRef
+uint32=200005; unsigned int m_imfId
+ptr=0 ; char* m_imfDRMName
+int8=0 ; char m_lodLevelStart
+int8=0 ; char m_lodLevelEnd
+; bitfield
+; {
+    ; bool m_bForceEmbedded : 1
+    ; bool m_placeInExteriorCell : 1
+    ; bool m_bCanCastShadows : 1
+    ; bool m_bCanRenderInReflection : 1
+    ; bool m_disableCollision : 1
+    ; bool m_disableNavMesh : 1
+    ; bool m_collisionTerrainGroupEnabled : 1
+    ; bool m_streamOverride : 1
+    ; bool m_siEnabled : 1
+    ; char __bitfieldpadding19 : 7
+    uint16=0
+; }
+float32=0 ; float m_instanceLodBias
+float32=1 ; float m_instanceLodScale
+ptr=0 ; cdc::TextureMap* m_pTexture0
+ptr=0 ; cdc::TextureMap* m_pTexture1
+ptr=0 ; cdc::TextureMap* m_pTexture2
+ptr=0 ; cdc::TextureMap* m_pTexture3
+ptr=0 ; dtp::IMFRef::InstanceParams* m_pInstanceParams
+; dtp::LightMapProps m_lightMapProperties
+; {
+    float32=0 ; float m_uvScale[2]
+    float32=0
+    float32=0 ; float m_uvOffset[2]
+    float32=0
+    ptr=0 ; cdc::TextureMap* m_texture
+; }
+uint32=0 ; unsigned int m_numOverrideMaterials
+ptr=0 ; dtp::IMFRef::MaterialOverride* m_overrideMaterials
+; dtp::TerrainLightMask m_lightMask
+; {
+    uint32=-1 ; unsigned int m_uint32
+; }
+float32=0 ; float m_reflectionLODBias
+uint32=-1 ; unsigned int m_collisionTypeOverride
+uint32=-1 ; unsigned int m_collisionTerrainGroupId
+ptr=0 ; cdc::IMFRefRuntimeInstanceBase* m_pData
+ptr=0 ; cdc::ResolveObject* m_pResolveObject
+ptr=0 ; cdc::MeshInstance** m_pMeshInstances
+float32=0 ; float m_introductionDistance
+uint32=-1 ; unsigned int m_streamLayer
+ptr=0 ; cdc::IMaterial* m_siMaterial
+uint32=0 ; unsigned int m_index
+pad=4
+
+[imfref-level-mesh-debugname]
+str=level_mesh-tras1
+
+align=4
+
 [intros]
 ptr=intro-player
+
+; NOTE: dtp::Intro needs 16-byte alignment
+align=16
 
 [intro-player]
 ; cdc::Euler reversedEulerRotation
