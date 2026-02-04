@@ -84,7 +84,7 @@ ptr=imfref-level-mesh
 ; {
     ; cdc::Vector4 col0
     ; {
-        float32=10
+        float32=100
         float32=0
         float32=0
         float32=0
@@ -92,7 +92,7 @@ ptr=imfref-level-mesh
     ; cdc::Vector4 col1
     ; {
         float32=0
-        float32=10
+        float32=100
         float32=0
         float32=0
     ; }
@@ -100,7 +100,7 @@ ptr=imfref-level-mesh
     ; { 
         float32=0
         float32=0
-        float32=10
+        float32=100
         float32=0
     ; }
     ; cdc::Vector4 col3
