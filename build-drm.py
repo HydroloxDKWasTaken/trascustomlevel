@@ -105,7 +105,10 @@ sections = []
 primary_section = -1
 
 with open(drmname, "r") as f:
-    for i, line in enumerate(f):
+    for line in f:
+        if line.startswith(";"):
+            continue
+
         s = line.split()
         typ = s[0]
         id_ = int(s[1])
@@ -144,7 +147,7 @@ with open(drmname, "r") as f:
         if section.is_primary:
             if primary_section != -1:
                 print("Multiple primary sections in drm")
-            primary_section = i
+            primary_section = len(sections) - 1
 
 k_dlc_index = 69 << 4
 tigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.tiger"
