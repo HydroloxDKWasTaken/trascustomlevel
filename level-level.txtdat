@@ -13,13 +13,7 @@ ptr=0 // void* pSoundSpatialData
 externptr=7:200001 // dtp::UnitData* pUnitData
 externptr=7:200002 // dtp::ADMD* pADMDData
 pad=12
-// cdc::Vector3 sceneCenterOffset
-// {
-float32=0.0
-float32=0.0
-float32=0.0
-float32=0.0
-// }
+float32=0.0 0.0 0.0 0.0 ; cdc::Vector3 sceneCenterOffset
 externptr=7:200003 // void* pSceneData
 
 [terrain]
@@ -38,20 +32,8 @@ ptr=0 // cdc::Mesh* meshes
 ptr=tg_1
 
 [tg_1]
-// cdc::Vector3 globalOffset
-// {
-float32=0.0
-float32=0.0
-float32=0.0
-float32=0.0
-// }
-// cdc::Vector3 localOffset
-// {
-float32=0.0
-float32=0.0
-float32=0.0
-float32=0.0
-// }
+float32=0.0 0.0 0.0 0.0 ; cdc::Vector3 globalOffset
+float32=0.0 0.0 0.0 0.0 ; cdc::Vector3 localOffset
 int32=0 // int m_obsolete
 int32=0 // int ID
 int32=10050 // int uniqueID
