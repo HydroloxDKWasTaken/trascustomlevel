@@ -5,8 +5,10 @@ dtp 200003 level-cellgroup.dat
 model 200004 level-mesh.tr9modeldata
 dtp 200005 level-meshimf.dat
 ; Preload globaldebuginfo, which has mtl:29561
-;preload globaldebuginfo
+preload globaldebuginfo
 ; And squib, which has mtl:24925
-;preload squib
-; But this is really the correct way to do it...:
-; mat 29651 - offset=2ea5c802 doffset=4646f2f0 cs=777 size=3312 rs=384
+preload squib
+; Really we should just include the material to be 'correct'
+; But I can't really be bothered, since then I would also have to include all
+; the shaders in here too. And that would be literal *minutes* of work!!!
+;mat 29651 - offset=2ea5c802 doffset=4646f2f0 cs=777 size=3312 rs=384
