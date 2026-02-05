@@ -162,9 +162,9 @@ def get_preloads_bytes():
         b += b'\00'
     return b
 
-k_dlc_index = 69 << 4
-tigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.tiger"
-origtigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch3.000.orig.tiger"
+k_dlc_index = 67 << 4
+tigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch2.000.tiger"
+origtigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch2.000.orig.tiger"
 cur_offset = next_valid_offset(os.path.getsize(origtigername) + 0x800, 0x800)
 cur_decompressed_offset = 0x0
 prev_total_uncompressed_size = 0
