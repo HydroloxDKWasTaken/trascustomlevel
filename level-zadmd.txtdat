@@ -2,8 +2,8 @@
 uint32=0 ; unsigned int m_oldLightInstanceCount
 ptr=0 ; dtp::cdcRenderLightInstance** m_ppOldLightInstances
 ptr=0 ; dtp::ADMDObjectElement* cdcRenderLightInstances
-uint32=0 ; unsigned int m_numLightInstances
-ptr=0 ; dtp::LightInstance** m_ppLightInstances
+uint32=1 ; unsigned int m_numLightInstances
+ptr=lights ; dtp::LightInstance** m_ppLightInstances
 uint32=1 ; unsigned int m_introCount
 ptr=intros ; dtp::Intro** m_ppIntros
 uint32=0 ; unsigned int m_markerCount
@@ -316,6 +316,234 @@ pad=12
     float32=0
     float32=0
 ; }
+
+align=4
+[lights]
+ptr=light
+
+align=16
+[light]
+; cdc::Matrix m_transform
+; {
+    float32=1.0 0.0 0.0 0.0 ; cdc::Vector4 col0
+    float32=0.0 1.0 0.0 0.0 ; cdc::Vector4 col1
+    float32=0.0 0.0 1.0 0.0 ; cdc::Vector4 col2
+    float32=1000.0 5000.0 1000.0 1.0 ; cdc::Vector4 col3
+; }
+; cdc::Matrix m_attachTransform
+; {
+    float32=1.0 0.0 0.0 0.0 ; cdc::Vector4 col0
+    float32=0.0 1.0 0.0 0.0 ; cdc::Vector4 col1
+    float32=0.0 0.0 1.0 0.0 ; cdc::Vector4 col2
+    float32=0.0 0.0 0.0 1.0 ; cdc::Vector4 col3
+; }
+uint8=1 ; bool m_attachTransformCalculated
+pad=3
+ptr=light-debugname ; const char* m_debugName
+uint32=0 ; unsigned int m_lightId
+ptr=0 ; cdc::ISceneLight* m_pSceneLight
+ptr=0 ; StreamUnit* m_pStreamUnit
+uint8=0 ; bool m_bIsDynamic
+pad=1
+; should be same as in level-cellgroup.txtdat
+uint16=42 ; unsigned short m_tiedCellID
+uint8=0 ; bool m_enableParentAttach
+uint8=0 ; bool m_parentRelative
+; dtp::LightInstance::UnitIntroID m_parentIntro
+; {
+    uint16=-1 ; unsigned short m_introUniqueID
+; }
+uint16=-1 ; unsigned short m_parentSection
+; dtp::ModelBoneOrMarkerReferenceWithContext m_parentMarker
+; {
+    ; technically kByUserDefinedIndex
+    ; but this is disabled so who cares
+    uint8=0 ; unsigned char m_refType
+    pad=1
+    ; union dtp::ModelBoneOrMarkerReferenceWithContext::ModelBoneOrMarkerRefData m_refData
+    ; {
+        int16=-1 ; short m_byUserDefinedIndex
+        ; unsigned short m_byBoneIndex
+        ; unsigned short m_byMarkerIndex
+    ; }
+; }
+pad=2
+; dtp::LightTemplateData m_data
+; {
+    uint8=0 ; bool m_scriptDisabled
+    uint8=1 ; bool m_inExteriorCell
+    uint16=0 ; unsigned short m_scriptLightGroup
+    ; dtp::UnitLightGroup m_unitLightGroup
+        uint16=194 ; unsigned short m_unit
+        uint8=-1 ; unsigned char m_unitLightGroupIdx
+        pad=1
+    uint8=0 ; bool m_enableLightCulling
+    uint8=0 ; bool m_invertedLightCulling
+    pad=2
+    float32=0.0 ; float m_cullLightDistance
+    float32=0.0 ; float m_cullLightFadeDistance
+    ; bitfield
+    ; {
+        ; bool m_activeInGameplay : 1
+        ; bool m_activeInCinematics : 1
+        ; bool m_activeForMainPass : 1
+        ; bool m_activeForReflection : 1
+        ; bool m_activeForCapturing : 1
+        ; char __bitfieldpadding8 : 3
+        uint8=31 ; all of the flags!
+        pad=3
+    ; }
+    float32=1.0 ; float m_rangeScale
+    float32=1.0 ; float m_rangeScale_scripted
+    ; dtp::LightTemplateData::LightType::LightType_directional
+    int32=2 ; int m_lightType
+    ; dtp::LightTemplateData::LightComplexity::LightComplexity_universal
+    int32=1 ; int m_lightComplexity
+    ; FIXME: these are for testing
+    ;int32=0 ; point
+    ;int32=2 ; fill
+    float32=10000 ; float m_range
+    float32=0.7 ; float m_lightIntensity
+    ; TODO: I don't really know what these mean...
+    float32=1.0 ; float m_umbra
+    float32=1.0 ; float m_penumbra
+    float32=10000 ; float m_nearRadius
+    float32=0 ; float m_boxLightStartX
+    float32=0 ; float m_boxLightFalloffX
+    float32=0 ; float m_boxLightStartY
+    float32=0 ; float m_boxLightFalloffY
+    float32=0 ; float m_boxLightStartZ
+    float32=0 ; float m_boxLightFalloffZ
+    int32=0 ; int m_fireLightFlameScale
+    int32=0 ; int m_fireLightMaskScale
+    float32=0 ; float m_fireLightBurnSpeed
+    float32=0 ; float m_fireLightCurrentBurn
+    uint8=0 ; bool m_cheapWetLight
+    pad=3
+    ptr=0 ; cdc::TextureMap* m_wetCubeMapTexture
+    float32=0 ; float m_wetCubeMapIntensity
+    float32=0 ; float m_wetDarkLightIntensity
+    uint8=252 ; unsigned char m_lightColorR
+    uint8=250 ; unsigned char m_lightColorG
+    uint8=227 ; unsigned char m_lightColorB
+    uint8=255 ; unsigned char m_attenuation[256]
+    repeat=255:1
+    pad=1
+    float32=1.0 ; float m_specularStrength
+    float32=1.0 ; float m_lambertWeight
+    float32=1.0 ; float m_halfLambertWeight
+    float32=1.0 ; float m_ambientWeight
+    float32=1.0 ; float m_minShadowSpecular
+    uint8=0 ; bool m_enableVariation
+    uint8=0 ; bool m_randomStartVariation
+    pad=2
+    float32=0 ; float m_intensityVariationSpeed
+    ptr=0 ; unsigned char* m_intensityVariation
+    uint8=0 ; bool m_enableModulationTexture
+    pad=3
+    ptr=0 ; cdc::TextureMap* m_modulationTexture
+    float32=0 ; float m_texScale
+    float32=0 ; float m_texRotation
+    float32=0 ; float m_texXScroll
+    float32=0 ; float m_texYScroll
+    uint8=0 ; bool m_shadowEnabled
+    uint8=0 ; bool m_enablePerInstanceShadowBias
+    pad=2
+    float32=0 ; float m_shadowConstBias
+    float32=0 ; float m_shadowSlopeBias
+    float32=0 ; float m_shadowDistanceBias
+    ; dtp::LightTemplateData::ShadowMapSize::ShadowMapSize_128
+    int32=128 ; int m_shadowMapSize
+    uint8=0 ; bool m_isReceiverFocus
+    uint8=0 ; bool m_viewIndependentShadowCulling
+    uint8=0 ; bool m_enableShadowLOD
+    pad=1
+    float32=0 ; float m_shadowLODDist1
+    float32=0 ; float m_shadowLODDist2
+    float32=0 ; float m_shadowLODDist3
+    float32=0 ; float m_vsmBias
+    float32=0 ; float m_vsmDarken
+    float32=0 ; float m_vsmClamp
+    int32=0 ; int m_vsmBlur
+    uint8=0 ; bool m_enableAutoLightConversion
+    pad=3
+    float32=0 ; float m_conversionDistance
+    uint8=0 ; bool m_enableShadowDistanceCulling
+    pad=3
+    float32=0 ; float m_shadowFadeDistance
+    float32=0 ; float m_shadowCullDistance
+    uint16=0 ; unsigned short m_lightGroup
+    ; bitfield
+    ; {
+        ; bool m_affectsPlayer : 1
+        ; bool m_affectsIntros : 1
+        ; bool m_affectsBGObjects : 1
+        ; bool m_affectsTerrain : 1
+        ; bool m_affectsGroup1 : 1
+        ; bool m_affectsGroup2 : 1
+        ; bool m_affectsGroup3 : 1
+        ; bool m_affectsGroup4 : 1
+        ; bool m_affectsCineGroup1 : 1
+        ; bool m_affectsCineGroup2 : 1
+        ; bool m_affectsCineGroup3 : 1
+        ; bool m_affectsCineGroup4 : 1
+        ; bool m_affectsCineGroup5 : 1
+        ; bool m_affectsCineGroup6 : 1
+        ; bool m_affectsCineGroup7 : 1
+        ; bool m_affectsCineGroup8 : 1
+        ; bool m_affectsWater : 1
+        ; bool m_affectsFX : 1
+        ; char __bitfieldpadding91 : 6
+        ; just enable everything
+        uint8=-1
+        uint8=-1
+        uint8=-1
+        ; NOTE: *three* uint8s!
+    ; }
+    ; dtp::LightTemplateData::OnlyAffects::OnlyAffects_Everything
+    uint8=0 ; char m_onlyAffects
+    pad=2
+    ptr=0 ; short* m_affectsCells
+    uint32=0 ; unsigned int m_affectsCellsCount
+    ; bitfield {
+        ; bool m_shadowAffectsPlayer : 1
+        ; bool m_shadowAffectsIntros : 1
+        ; bool m_shadowAffectsBGObjects : 1
+        ; bool m_shadowAffectsTerrain : 1
+        ; bool m_shadowAffectsGroup1 : 1
+        ; bool m_shadowAffectsGroup2 : 1
+        ; bool m_shadowAffectsGroup3 : 1
+        ; bool m_shadowAffectsGroup4 : 1
+        ; bool m_shadowAffectsCineGroup1 : 1
+        ; bool m_shadowAffectsCineGroup2 : 1
+        ; bool m_shadowAffectsCineGroup3 : 1
+        ; bool m_shadowAffectsCineGroup4 : 1
+        ; bool m_shadowAffectsCineGroup5 : 1
+        ; bool m_shadowAffectsCineGroup6 : 1
+        ; bool m_shadowAffectsCineGroup7 : 1
+        ; bool m_shadowAffectsCineGroup8 : 1
+        uint16=-1 ; shadow affects everything... even though we have no shadow right now
+    ; }
+    uint8=0 ; bool m_animEnabled
+    pad=1
+    float32=0.0 0.0 0.0 0.0 ; float m_animParamsPosX[4]
+    float32=0.0 0.0 0.0 0.0 ; float m_animParamsPosY[4]
+    float32=0.0 0.0 0.0 0.0 ; float m_animParamsPosZ[4]
+    float32=0.0 0.0 0.0 0.0 ; float m_animParamsDirX[4]
+    float32=0.0 0.0 0.0 0.0 ; float m_animParamsDirY[4]
+    float32=0.0 0.0 0.0 0.0 ; float m_animParamsDirZ[4]
+    float32=10 ; float m_originalIntensity
+    uint8=255 ; unsigned char m_originalColorR
+    uint8=255 ; unsigned char m_originalColorG
+    uint8=255 ; unsigned char m_originalColorB
+    pad=1
+    float32=1.0 ; float m_originalRangeScale
+    pad=4
+    str=should be 320
+; }
+
+[light-debugname]
+str=light_directional-tras1
 
 [intro-player-debugname]
 str=player-tras1
