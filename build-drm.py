@@ -124,7 +124,6 @@ with open(drmname, "r") as f:
             section.file = file
             section.is_primary = "primary" in flags
             section.already_in_archive = file == "-"
-            print(section)
             section.offset = 0
             for f in flags:
                 if f.startswith("rt="):
@@ -143,7 +142,6 @@ with open(drmname, "r") as f:
                 section.size = os.path.getsize(file)
                 ext = get_extension(section)
                 shutil.copyfile(file, "customlevel_bin/" + str(id_) + ext)
-                print(" Copied '{}' to '{}{}'".format(file, id_, ext))
             if section.reloc_size == -1:
                 section.reloc_size = get_reloc_size(section.file)
                 section.size -= section.reloc_size
