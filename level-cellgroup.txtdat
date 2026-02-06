@@ -76,7 +76,7 @@ pad=12
     uint8=0 ; unsigned char zShift
 ; }
 uint16=0 ; unsigned short cellIndex
-uint16=0 ; unsigned short uniqueId
+uint16=42 ; unsigned short uniqueId
 uint16=0 ; unsigned short numTerrainGroups
 uint16=0 ; unsigned short numPortals
 uint16=0 ; unsigned short numPortalVerts
