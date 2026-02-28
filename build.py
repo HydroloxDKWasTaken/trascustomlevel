@@ -1,13 +1,14 @@
 import sys
 sys.path.append(".")
 from build_colmesh import build_colmesh
-from build_common import build_error
+from build_common import build_error, settings
 from build_drm import build_drm
 import os
+import shutil
 import subprocess
 
 # much hardcode very wow
-mkloadob_exe_path = "/mnt/d/Programming/Projects/cdc_lib/build_win/tools/resource_mkloadob/cdc_lib_resource_mkloadob.exe"
+mkloadob_exe_path = settings["mkloadob_path"]
 clean_build = False
 did_something = False
 

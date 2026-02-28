@@ -2,3 +2,5 @@ customlevel_bin/*
 __pycache__/*
 *.cmeshtxt
 *.dat
+
+settings.txt

@@ -1,0 +1,14 @@
+; PLACEHOLDER SETTINGS FILE
+; =========================
+; Copy this to `settings.txt`!!!
+
+; Source tiger file; should be a retail file. Or at least one that you haven't
+; previously ran build.py on.
+src_tiger D:/SteamLibrary/steamapps/common/Tomb Raider/patch2.000.orig.tiger
+
+; Destination tiger file. This is the only thing that will actually get shipped!
+dest_tiger D:/SteamLibrary/steamapps/common/Tomb Raider/patch2.000.tiger
+
+; Path to a compiled cdc_lib_resource_mkloadob executable.
+; Compile from https://gitlab.com/Hydrolox/cdc_lib
+mkloadob_path C:/Source/cdc_lib/build/tools/resource_mkloadob/cdc_lib_resource_mkloadob.exe

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-import build_common
+from build_common import build_error, settings
 import io
 import os
 import shutil
@@ -149,10 +149,15 @@ def build_drm(drmname, drmoutname):
             b += preload.encode()
             b += b'\00'
         return b
+    
+    def get_dlc_index(tiger):
+        with open(tiger, "rb") as f:
+            f.seek(0x10)
+            return read_u32(f) << 4
 
-    k_dlc_index = 67 << 4
-    tigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch2.000.tiger"
-    origtigername = "/mnt/d/SteamLibrary/steamapps/common/Tomb Raider/patch2.000.orig.tiger"
+    origtigername = settings["src_tiger"]
+    tigername = settings["dest_tiger"]
+    k_dlc_index = get_dlc_index(origtigername)
     cur_offset = next_valid_offset(os.path.getsize(origtigername) + 0x800, 0x800)
     cur_decompressed_offset = 0x0
     prev_total_uncompressed_size = 0
