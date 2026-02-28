@@ -6,4 +6,5 @@ colmesh level-cmesh.obj level-cmesh.cmeshtxt
 mkloadob level-cmesh.cmeshtxt level-cmesh.dat
 mkloadob level-tg1.txtdat level-tg1.dat
 mkloadob level.txtdat level.dat
+copy objlist.unitlistdat customlevel_bin/pc-w/objlist.dat
 drm mytestlevel.txtdrm customlevel_bin/pc-w/mytestlevel.drm
