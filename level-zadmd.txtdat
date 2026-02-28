@@ -18,8 +18,8 @@ ptr=0 ; dtp::ADMDObjectElement** m_ppJumpHelpers
 ptr=0 ; dtp::ADMDObjectElement* m_pJumpHelperList
 uint32=0 ; unsigned int m_StreamSignalCount
 ptr=0 ; dtp::ADMDObjectElement* m_StreamSignalList
-uint32=0 ; unsigned int m_TerrainGroupCount
-ptr=0 ; dtp::ADMDUnitElement* TerrainGroups
+uint32=1 ; unsigned int m_TerrainGroupCount
+externptr=7:200007 ; dtp::ADMDUnitElement* TerrainGroups
 uint32=0 ; unsigned int m_SfxMarkerCount
 ptr=0 ; dtp::ADMDObjectElement** m_ppSfxMarkers
 ptr=0 ; dtp::ADMDObjectElement* SfxMarkers
@@ -130,7 +130,7 @@ int8=0 ; char m_lodLevelEnd
     ; bool m_streamOverride : 1
     ; bool m_siEnabled : 1
     ; char __bitfieldpadding19 : 7
-    uint16=0
+    uint16=0x40 ; m_collisionTerrainGroupEnabled=true
 ; }
 float32=0 ; float m_instanceLodBias
 float32=1 ; float m_instanceLodScale
@@ -155,7 +155,7 @@ ptr=0 ; dtp::IMFRef::MaterialOverride* m_overrideMaterials
 ; }
 float32=0 ; float m_reflectionLODBias
 uint32=-1 ; unsigned int m_collisionTypeOverride
-uint32=-1 ; unsigned int m_collisionTerrainGroupId
+uint32=0 ; unsigned int m_collisionTerrainGroupId
 ptr=0 ; cdc::IMFRefRuntimeInstanceBase* m_pData
 ptr=0 ; cdc::ResolveObject* m_pResolveObject
 ptr=0 ; cdc::MeshInstance** m_pMeshInstances

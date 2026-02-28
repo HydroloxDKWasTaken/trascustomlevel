@@ -1,0 +1,90 @@
+; We need this ADMD terrain group for collision to work properly
+[tg1]
+; bitfield
+; {
+    ; bool flag_no_draw : 1
+    ; bool flag_no_collide : 1
+    ; bool flag_moving_skydome : 1
+    ; bool flag_draw_behind_all : 1
+    ; bool flag_no_weather_collide : 1
+    ; bool bRenderInReflectionPass : 1
+    ; bool bRenderInMainPass : 1
+    ; bool bRenderInCapturePass : 1
+    ; bool bCanCastShadows : 1
+    ; bool m_isReflection : 1
+    ; char __bitfieldpadding8 : 6
+    uint16=0 ; we don't care about drawing anything
+; }
+uint8=0 ; bool m_isCutsceneReflection
+pad=1
+uint32=-1 ; unsigned int m_markerInstanceID
+uint32=-1 ; unsigned int m_reflectionMarker
+uint8=0 ; bool m_isAnimated : 1
+; char __bitfieldpadding17 : 7
+pad=3
+uint32=-1 ; unsigned int m_animMarkerInstanceID
+float32=0 ; float m_sortBias
+uint32=-1 ; unsigned int m_pWaterVolume
+uint8=0 ; bool m_waterSurface : 1
+; char __bitfieldpadding22 : 7
+pad=3
+float32=0 ; float m_waterAmplitude
+float32=0 ; float m_waterPropagationSpeed
+float32=0 ; float m_waterDampening
+float32=0 ; float m_waterRippleMultiplier
+float32=0 ; float m_waterFadeBegin
+float32=0 ; float m_waterFadeEnd
+ptr=0 ; cdc::IRippleMap* m_pReactiveNormalMap
+uint32=0 ; unsigned int m_ID
+; dtp::TerrainLightMask m_lightMask
+    uint32=-1 ; unsigned int m_uint32
+float32=0 ; float friction
+; dtp::CollisionCategory collisionCategory
+; {
+    ; dtp::CollisionTypesBitfield looks like:
+    ; data +0x48 [sizeof=1] bool terrain : 1
+    ; data +0x48 [sizeof=1] bool player : 1
+    ; data +0x48 [sizeof=1] bool npc : 1
+    ; data +0x48 [sizeof=1] bool enemy : 1
+    ; data +0x48 [sizeof=1] bool object : 1
+    ; data +0x48 [sizeof=1] bool shard : 1
+    ; data +0x48 [sizeof=1] bool camera : 1
+    ; data +0x48 [sizeof=1] bool cloth : 1
+    ; data +0x49 [sizeof=1] bool incidental : 1
+    ; data +0x49 [sizeof=1] bool gear : 1
+    ; data +0x49 [sizeof=1] bool thrownProjectile : 1
+    ; data +0x49 [sizeof=1] bool arrow : 1
+    ; data +0x49 [sizeof=1] bool clutter : 1
+    ; data +0x49 [sizeof=1] bool cameraLineOfSight : 1
+    ; data +0x49 [sizeof=1] char __bitfieldpadding8 : 2
+
+    ; dtp::CollisionTypesBitfield collideWith
+    ; {
+        uint16=-1 ; everything
+    ; }
+    ; dtp::CollisionTypesBitfield collideNotWith
+    ; {
+        uint16=0 ; nothing
+    ; }
+    ; dtp::CollisionTypesBitfield collideAs
+    ; {
+        uint16=1 ; terrain
+    ; }
+    pad=2
+    int32=0 ; int collideGroup
+; }
+; bitfield
+; {
+    ; bool[0x1  ] flag_player_respond_trans : 1
+    ; bool[0x2  ] flag_particle_trans : 1
+    ; bool[0x4  ] flag_bullet_trans : 1
+    ; bool[0x8  ] flag_aim_transparent : 1
+    ; bool[0x10 ] flag_indicator_transparent : 1
+    ; bool[0x20 ] flag_npcAim_notTransparent : 1
+    ; bool[0x40 ] flag_shallow_water : 1
+    ; bool[0x80 ] flag_jump_collision_trans : 1
+    ; bool[0x100] flag_grapple_arrow : 1
+    ; char __bitfieldpadding48 : 7
+    uint16=0x013f ; disable flag_jump_collision_trans, flag_shallow_water
+; }
+pad=10

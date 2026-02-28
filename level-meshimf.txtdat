@@ -5,7 +5,7 @@ uint32=2 ; unsigned int m_type
     ; blank, this is a mesh IMF ; cdc::CellIMFDataList* pCellImfDataList
     resourceptr=12:200004 ; cdc::RenderMesh* pRenderModel
 ; }
-ptr=0 ; cdc::CMeshResource* m_colMesh
+ptr=cmesh ; cdc::CMeshResource* m_colMesh
 uint8=0 ; bool m_stream
 pad=3
 float32=9999 ; float m_introductionDistance
@@ -14,3 +14,8 @@ uint8=0 ; bool m_instanceCollision
 uint8=0 ; bool m_useDistanceToBoundaryForLOD
 pad=6
 pad=112 ; dtp::LODLevels m_lodLevels
+
+[cmesh]
+uint32=1
+externptr=7:200006 ; cdc::Mesh* pMesh
+uint32=0 ; unsigned int collisionTypeIndex

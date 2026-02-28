@@ -4,6 +4,8 @@ dtp 200002 level-zadmd.dat
 dtp 200003 level-cellgroup.dat
 model 200004 level-mesh.tr9modeldata
 dtp 200005 level-meshimf.dat
+dtp 200006 level-cmesh.dat
+dtp 200007 level-tg1.dat
 ; Preload globaldebuginfo, which has mtl:29561
 preload globaldebuginfo
 ; And squib, which has mtl:24925
