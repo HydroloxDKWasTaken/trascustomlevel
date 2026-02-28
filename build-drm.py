@@ -26,6 +26,8 @@ def get_typnum(s):
         return 5
     elif s == "dtp":
         return 7
+    elif s == "shader":
+        return 9
     elif s == "mat":
         return 10
     elif s == "model":
@@ -60,6 +62,8 @@ def get_extension(section):
         return ".tr9dtp"
     elif section.typ == "mat":
         return ".tr9material"
+    elif section.typ == "shader":
+        return ".tr9shaderlib"
     elif section.typ == "model":
         return ".tr9model"
     print("Unknown section type '{}'".format(section.typ))

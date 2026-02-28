@@ -6,11 +6,21 @@ model 200004 level-mesh.tr9modeldata
 dtp 200005 level-meshimf.dat
 dtp 200006 level-cmesh.dat
 dtp 200007 level-tg1.dat
-; Preload globaldebuginfo, which has mtl:29561
-preload globaldebuginfo
-; And squib, which has mtl:24925
-preload squib
-; Really we should just include the material to be 'correct'
-; But I can't really be bothered, since then I would also have to include all
-; the shaders in here too. And that would be literal *minutes* of work!!!
-;mat 29651 - offset=2ea5c802 doffset=4646f2f0 cs=777 size=3312 rs=384
+mat 29651 - offset=2ea5c802 doffset=4646f2f0 cs=777 size=3312 rs=384
+shader 43210 - offset=13422003 doffset=1d5d9ec0 cs=4089 size=20976 rs=0
+shader 43219 - offset=13427803 doffset=1d5f1d30 cs=4660 size=40336 rs=0
+shader 43220 - offset=13429003 doffset=1d5fbac0 cs=3607 size=17516 rs=0
+shader 43221 - offset=13430803 doffset=1d622cc0 cs=3631 size=17692 rs=0
+shader 43222 - offset=13431803 doffset=1d6271e0 cs=2546 size=19240 rs=0
+shader 43223 - offset=13432803 doffset=1d62bd10 cs=2546 size=19240 rs=0
+shader 43224 - offset=13433803 doffset=1d630840 cs=3558 size=17116 rs=0
+shader 43225 - offset=13434803 doffset=1d634b20 cs=3558 size=17116 rs=0
+shader 43226 - offset=13435803 doffset=1d638e00 cs=4403 size=36976 rs=0
+shader 43227 - offset=13438803 doffset=1d649290 cs=2447 size=18664 rs=0
+shader 43230 - offset=13443003 doffset=1d66c050 cs=3531 size=16892 rs=0
+shader 43231 - offset=13445003 doffset=1d673d60 cs=2646 size=20824 rs=0
+mat 24925 - offset=2e737002 doffset=4600bd40 cs=711 size=3112 rs=380
+; mtl:24925 also uses 43220-43227, 43230 shared with mtl:29651
+shader 43346 - offset=19a2a803 doffset=1d83b170 cs=2584 size=19768 rs=0
+shader 43354 - offset=19a30003 doffset=1d852e90 cs=3591 size=17276 rs=0
+shader 43370 - offset=19a34803 doffset=1d861cf0 cs=3743 size=18128 rs=0
