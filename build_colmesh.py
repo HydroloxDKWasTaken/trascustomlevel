@@ -1,11 +1,15 @@
-# build_colmesh.py mesh.obj mesh.colmeshtxt
-# Creates a mkloadob file with the cdc::Mesh of mesh.obj
-# In Blender: Export > Wavefront (.obj)
-# Check "Triangulated Mesh", and turn everything else off
-# Also set "Forward Axis" to "Y"
-# And "Up Axis" to "Z" (needed because CDC is Z-up)
-# You may want to check "Include Selection Only" if you have multiple objects
-# in your scene, but only want to export one.
+# build_colmesh.py
+# SUMMARY
+#   Creates a mkloadob file with the cdc::Mesh of mesh.obj
+# USAGE
+#   build_colmesh("mesh.obj", "mesh.colmeshtxt")
+# NOTE
+#   For the obj file: In Blender: Export > Wavefront (.obj)
+#    Check "Triangulated Mesh", and turn everything else off
+#    Also set "Forward Axis" to "Y"
+#     and set "Up Axis" to "Z" (because CDC is Z-up)
+#    You may want to check "Include Selection Only" if you have multiple objects
+#     in your scene, but only want to export one as the collision mesh.
 import sys
 
 def build_colmesh(src, dest):
@@ -46,10 +50,10 @@ def build_colmesh(src, dest):
             elif data[0] == "f":
                 for i in range(1, len(data)):
                     data[i] = data[i].split("/")[0]
+                # Note the -1 here! OBJ indices start at 1 for god knows what reason
                 v0 = int(data[1]) - 1
                 v1 = int(data[2]) - 1
                 v2 = int(data[3]) - 1
-                # Note the -1 here! OBJ indices start at 1 for god knows what reason
                 faces.append((v0, v1, v2))
                 if v0 not in faces_usagecount:
                     faces_usagecount[v0] = 0
@@ -104,24 +108,9 @@ def build_colmesh(src, dest):
             f.write("uint32={} ; unsigned int i0\n".format(fa[0]))
             f.write("uint32={} ; unsigned int i1\n".format(fa[1]))
             f.write("uint32={} ; unsigned int i2\n".format(fa[2]))
-            # This makes collision ""works"" (but it seems reversed)
-            # f.write("uint32={} ; unsigned int i0\n".format(fa[0]))
-            # f.write("uint32={} ; unsigned int i1\n".format(fa[2]))
-            # f.write("uint32={} ; unsigned int i2\n".format(fa[1]))
-            # This makes collision ""works"" (but it seems reversed)
-            # f.write("uint32={} ; unsigned int i0\n".format(fa[1]))
-            # f.write("uint32={} ; unsigned int i1\n".format(fa[0]))
-            # f.write("uint32={} ; unsigned int i2\n".format(fa[2]))
-            print(get_normal(verts[fa[0]], verts[fa[1]], verts[fa[2]]))
-            # f.write("uint32={} ; unsigned int i0\n".format(fa[1]))
-            # f.write("uint32={} ; unsigned int i1\n".format(fa[2]))
-            # f.write("uint32={} ; unsigned int i2\n".format(fa[0]))
-            # f.write("uint32={} ; unsigned int i0\n".format(fa[2]))
-            # f.write("uint32={} ; unsigned int i1\n".format(fa[1]))
-            # f.write("uint32={} ; unsigned int i2\n".format(fa[0]))
-            # f.write("uint32={} ; unsigned int i0\n".format(fa[2]))
-            # f.write("uint32={} ; unsigned int i1\n".format(fa[0]))
-            # f.write("uint32={} ; unsigned int i2\n".format(fa[1]))
+            normal = get_normal(verts[fa[0]], verts[fa[1]], verts[fa[2]])
+            if normal[2] <= 0.0:
+                print("bad normal, not pointing up: {}".format(normal))
             adjacency_flags = 0
             if faces_usagecount[fa[0]] > 1:
                 adjacency_flags |= 1 # CHECK_VERT0
