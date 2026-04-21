@@ -5,7 +5,8 @@ ptr=0 // char* worldName
 ptr=0 // short* SignalIDList
 uint32=0x4c204be // unsigned int versionNumber
 uint32=0xcafecafe // unsigned int guiID
-int32=194 // int streamUnitID
+; unitid of 'cine_chaos_beach'
+int32=47 // int streamUnitID
 ptr=0 // short** WeatherHeightmapData
 ptr=0 // void* pCdcPlannerData
 ptr=0 // void* pVolumetricPlannerData

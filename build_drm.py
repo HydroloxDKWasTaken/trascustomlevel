@@ -254,7 +254,7 @@ def build_drm(drmname, drmoutname):
             o.seek(o.tell() + 0x24) # skip past dlcIndex + configName
             records = read_records(o, record_count)
             target_offset = cur_offset
-            insert_record(records, (0x5C668E56, 0xffffffff, os.path.getsize(drmoutname), target_offset | k_dlc_index))
+            insert_record(records, (0x567C7658, 0xffffffff, os.path.getsize(drmoutname), target_offset | k_dlc_index))
             write_u32(f, record_count + 1)
             o.seek(0x10)
             stream_copy(o, f, 0x10, 0x34) # copy dlcIndex + configName

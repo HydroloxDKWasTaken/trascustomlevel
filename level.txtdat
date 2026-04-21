@@ -326,7 +326,7 @@ pad=12
 uint32=0 ; unsigned int disabledLightListSize
 
 [unitnamestr]
-str=mytestlevel
+str=cine_chaos_beach
 
 align=4
 
